@@ -36,6 +36,13 @@ public class User {
 		this.depthead = depthead;
 	}
 
+	
+	public User(String usernames, String passwords) {
+		super();
+		this.usernames = usernames;
+		this.passwords = passwords;
+	}
+
 
 	public Integer getId() {
 		return id;
