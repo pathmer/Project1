@@ -2,7 +2,6 @@ package dev.athmer.project1.beans;
 
 public class FormData {
 	private Integer id;
-	private Integer startDate;
 	private Integer times;
 	private String locations;
 	private String description;
@@ -20,11 +19,10 @@ public class FormData {
 	}
 
 
-	public FormData(Integer id, Integer startDate, Integer times, String locations, String description, Double costs,
-			String gradeFormat, String eventType, String justification, Integer missedWorkhrsperwk, Integer requests) {
+	public FormData(Integer id, Integer times, String locations, String description, Double costs, String gradeFormat,
+			String eventType, String justification, Integer missedWorkhrsperwk, Integer requests) {
 		super();
 		this.id = id;
-		this.startDate = startDate;
 		this.times = times;
 		this.locations = locations;
 		this.description = description;
@@ -40,66 +38,98 @@ public class FormData {
 	public Integer getId() {
 		return id;
 	}
+
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(Integer startDate) {
-		this.startDate = startDate;
-	}
+
+
 	public Integer getTimes() {
 		return times;
 	}
+
+
 	public void setTimes(Integer times) {
 		this.times = times;
 	}
+
+
 	public String getLocations() {
 		return locations;
 	}
+
+
 	public void setLocations(String locations) {
 		this.locations = locations;
 	}
+
+
 	public String getDescription() {
 		return description;
 	}
+
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+
 	public Double getCosts() {
 		return costs;
 	}
+
+
 	public void setCosts(Double costs) {
 		this.costs = costs;
 	}
+
+
 	public String getGradeFormat() {
 		return gradeFormat;
 	}
+
+
 	public void setGradeFormat(String gradeFormat) {
 		this.gradeFormat = gradeFormat;
 	}
+
+
 	public String getEventType() {
 		return eventType;
 	}
+
+
 	public void setEventType(String eventType) {
 		this.eventType = eventType;
 	}
+
+
 	public String getJustification() {
 		return justification;
 	}
+
+
 	public void setJustification(String justification) {
 		this.justification = justification;
 	}
+
+
 	public Integer getMissedWorkhrsperwk() {
 		return missedWorkhrsperwk;
 	}
+
+
 	public void setMissedWorkhrsperwk(Integer missedWorkhrsperwk) {
 		this.missedWorkhrsperwk = missedWorkhrsperwk;
 	}
+
+
 	public Integer getRequests() {
 		return requests;
 	}
+
+
 	public void setRequests(Integer requests) {
 		this.requests = requests;
 	}
@@ -118,7 +148,6 @@ public class FormData {
 		result = prime * result + ((locations == null) ? 0 : locations.hashCode());
 		result = prime * result + ((missedWorkhrsperwk == null) ? 0 : missedWorkhrsperwk.hashCode());
 		result = prime * result + ((requests == null) ? 0 : requests.hashCode());
-		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
 		result = prime * result + ((times == null) ? 0 : times.hashCode());
 		return result;
 	}
@@ -178,11 +207,6 @@ public class FormData {
 				return false;
 		} else if (!requests.equals(other.requests))
 			return false;
-		if (startDate == null) {
-			if (other.startDate != null)
-				return false;
-		} else if (!startDate.equals(other.startDate))
-			return false;
 		if (times == null) {
 			if (other.times != null)
 				return false;
@@ -192,14 +216,11 @@ public class FormData {
 	}
 
 
-	
-	
 	@Override
 	public String toString() {
-		return "FormData [id=" + id + ", startDate=" + startDate + ", times=" + times + ", locations=" + locations
-				+ ", description=" + description + ", costs=" + costs + ", gradeFormat=" + gradeFormat + ", eventType="
-				+ eventType + ", justification=" + justification + ", missedWorkhrsperwk=" + missedWorkhrsperwk
-				+ ", requests=" + requests + "]";
+		return "FormData [id=" + id + ", times=" + times + ", locations=" + locations + ", description=" + description
+				+ ", costs=" + costs + ", gradeFormat=" + gradeFormat + ", eventType=" + eventType + ", justification="
+				+ justification + ", missedWorkhrsperwk=" + missedWorkhrsperwk + ", requests=" + requests + "]";
 	}
-	
+
 }

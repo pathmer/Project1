@@ -42,7 +42,6 @@ public class UserRepository implements RootRepository<User> {
 				u.setDepartment(rs.getString("department"));
 				u.setDepthead(rs.getInt("depthead"));
 
-				
 				users.add(u);
 			}
 			return users;
@@ -258,6 +257,52 @@ public class UserRepository implements RootRepository<User> {
 				return u;
 
 			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public List<User> getSubordanates(User activeuser) { //delete?
+		AppLogger.logger.info("User table view by username request.");
+		List<User> users = new ArrayList<User>();
+		String sql = null;
+
+		if ("supervisor".equals(activeuser.getUtype())) {
+			sql = "select * from \"Project_1\".users where supervisor = ?;";
+		}
+		else if ("manager".equals(activeuser.getUtype())) {
+			sql = "select * from \"Project_1\".users where manager = ?;";
+		}
+		else if ("depthead".equals(activeuser.getUtype())) {
+			sql = "select * from \"Project_1\".users where depthead = ?;";
+		}
+		
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, activeuser.getId());
+			
+			ResultSet rs = ps.executeQuery();
+		
+			while (rs.next()) {
+				User u = new User();
+				u.setId(rs.getInt("id"));
+				u.setUtype(rs.getString("utype"));
+				u.setUsernames(rs.getString("usernames"));
+				u.setPasswords(rs.getString("passwords"));
+				u.setSsn(rs.getInt("ssn"));
+				u.setFirstname(rs.getString("firstname"));
+				u.setLastname(rs.getString("lastname"));
+				u.setUstatus(rs.getString("ustatus"));
+				u.setSupervisor(rs.getInt("supervisor"));
+				u.setDepartment(rs.getString("department"));
+				u.setDepthead(rs.getInt("depthead"));
+				users.add(u);
+			}
+			return users;
+
 		}
 		catch (SQLException e) {
 			e.printStackTrace();

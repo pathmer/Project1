@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <title>New TRMS Request</title>
+    <br>
+    <button id='submit' type='button' onclick='submitrequest()'>Submit</button>
+    <button id='cancel' type='button' onclick='cancel()'>Cancel</button>
+    <br>
+    <div id='catInfo' class='container'>
+        <form>
+            <div class="form-control">
+            <br>
+                <label for='title'>Title:</label>
+                <input id='title'type='text' placeholder="request name">
+                <br>
+                <label for='startDate'>Start Date:</label>
+                <input id='startDate'type='date' placeholder="date">
+                <br>
+                <label for='times'>Time:</label>
+                <input id='times'type='time' placeholder="time">
+                <br>
+                <label for='locations'>Location:</label>
+                <input id='locations'type='text' placeholder="location">
+                <br>
+                <label for='description'>Description:</label>
+                <input id='description'type='text' placeholder="description">
+                <br>
+                <label for='costs'>Cost:</label>
+                <input id='costs'type='number' placeholder="cost">
+                <br>
+                <label for='gradeFormat'>Grade Format:</label>
+                <input id='gradeFormat'type='text' placeholder="Grade Format">
+                <br>
+                <label for='eventType'>Event Type:</label>
+                <input id='eventType'type='text' placeholder="Event Type">
+                <br>
+                <label for='justification'>Justification:</label>
+                <input id='justification'type='text' placeholder="Justification">
+                <br>
+                <label for='missedWorkhrsperwk'>Missed Work hrs/wk:</label>
+                <input id='missedWorkhrsperwk'type='number' placeholder="Missed Work hrs/wk">
+                <br>
+            </div>
+            <br>
+            <div class="form-control">
+                <br>
+                <label for='estreimbursement'>Estimated Reimbursement:</label>
+                <label id='estreimbursement'>$:</label>
+                <br>
+            </div>
+        </form>
+    </div>
+    <script src='../scripts/Homepage.js'></script>
+</body>
+</html>
+
+

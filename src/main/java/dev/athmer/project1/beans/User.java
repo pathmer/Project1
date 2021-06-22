@@ -43,6 +43,12 @@ public class User {
 		this.passwords = passwords;
 	}
 
+	
+	public User(Integer id) {
+		super();
+		this.id = id;
+	}
+
 
 	public Integer getId() {
 		return id;

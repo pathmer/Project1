@@ -6,17 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TRMS Home Page</title>
 </head>
-<body>
+<body onload="refreshhomepage()">
     <label for='logintitle'>Tuition Reimbursement Management System Home Page</label>
+    <br>
     <div id="account">
+        <br>
+        <label for='year'>Year:</label>
+        <input id='year'type='number' min='0' value="2000">
+        <br>
         <label for='balance'>Available Funds:</label>
         <label id='balance'>$</label>
         <br>
         <label for='pending'>Pending Funds:</label>
         <label id='pending'>$</label>
         <br>
+        <label for='reimbursed'>Reimbursed Funds:</label>
+        <label id='reimbursed'>$</label>
+        <br>
     </div>
-
-
+    <br>
+    <br>
+    <div id="buttons">
+        <button id='otheryear' type='button' onclick='changeyear()'>Change Year</button>
+        <button id='logout' type='button' onclick='logout()'>Log out</button>
+        <button id='newrequest' type='button' onclick='newrequestpage()'>New Request</button>
+    </div>
+    <br>
+    <br>
+    <div id="userRequestsSection">
+        <label for='userRequestsSection'>My Requests</label>
+        <table class='table table-dark table-striped'>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Breed</th>
+        </tr>
+        <tr id='row1' onclick='editrequest()'>
+            <td>North</td>
+            <td>4</td>
+            <td>Tabby</td>
+        </tr>
+    </table>
+    </div>
+    <br>
+    <br>
+    <div id="otherRequestsSection">
+        <label for='otherRequestsSection'>Other Requests</label>
+        <table class='table table-dark table-striped'>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Breed</th>
+            </tr>
+            <tr id='row1' onclick='editrequest()'>
+                <td>North</td>
+                <td>4</td>
+                <td>Tabby</td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <br>
+    <button id='refreshpage' type='button' onclick='refreshhomepage()'>refreshpage</button>
+    <script src='../scripts/Homepage.js'></script>
 </body>
 </html>

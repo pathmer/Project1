@@ -9,6 +9,7 @@ import java.util.List;
 
 
 import dev.athmer.project1.beans.Request;
+import dev.athmer.project1.beans.User;
 import dev.athmer.project1.logging.AppLogger;
 import dev.athmer.project1.utilities.JDBCConnection;
 
@@ -19,16 +20,17 @@ public class RequestRepository implements RootRepository<Request> {
 	@Override
 	public Request add(Request r) {
 		AppLogger.logger.info("Account table add record request.");
-		String sql = "insert into \"Project_1\".requests values (default, ?, ?, ?, ?, ?, ?, ?, default, default, default, ?) returning *;";
-		
+		String sql = "insert into \"Project_1\".requests values"
+				+ " (default, ?, ?, ?, ?, ?, ?, ?, default, default, default, default, default, default, default, default, default, ?) returning *;";
+
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, r.getTitle());
-			ps.setDouble(2, r.getReimbursement());
-			ps.setString(3, r.getStatus());
-			ps.setString(4, r.getInbox());
-			ps.setString(5, r.getDestination());
-			ps.setInt(6, r.getDatetimestamp());
+			ps.setDate(2, r.getStartDate());
+			ps.setDouble(3, r.getReimbursement());
+			ps.setString(4, r.getStatus());
+			ps.setInt(5, r.getInbox());
+			ps.setDate(6, r.getDatetimestamp());
 			ps.setString(7, r.getPriority());
 			ps.setInt(8, r.getAccounts());
 			
@@ -40,15 +42,21 @@ public class RequestRepository implements RootRepository<Request> {
 				if (rs.next()) {
 					r.setId(rs.getInt("id"));
 					r.setTitle(rs.getString("title"));
+					r.setStartDate(rs.getDate("startDate"));
 					r.setReimbursement(rs.getDouble("reimbursement"));
 					r.setStatus(rs.getString("status"));
-					r.setInbox(rs.getString("inbox"));
-					r.setDestination(rs.getString("destination"));
-					r.setDatetimestamp(rs.getInt("datetimestamp"));
+					r.setInbox(rs.getInt("inbox"));
+					r.setDatetimestamp(rs.getDate("datetimestamp"));
 					r.setPriority(rs.getString("priority"));
 					r.setAmmountexceeded(rs.getString("ammountexceeded"));
 					r.setExceededreason(rs.getString("exceededreason"));
 					r.setBencoescalated(rs.getString("bencoescalated"));
+					r.setEmpapp(rs.getString("empapp"));
+					r.setSupapp(rs.getString("supapp"));
+					r.setMsnapp(rs.getString("msnapp"));
+					r.setDhdapp(rs.getString("dhdapp"));
+					r.setBenapp(rs.getString("benapp"));
+					r.setDenialreason(rs.getString("denialreason"));
 					r.setAccounts(rs.getInt("accounts"));
 					
 					return r;
@@ -78,15 +86,21 @@ public class RequestRepository implements RootRepository<Request> {
 				Request r = new Request();
 				r.setId(rs.getInt("id"));
 				r.setTitle(rs.getString("title"));
+				r.setStartDate(rs.getDate("startDate"));
 				r.setReimbursement(rs.getDouble("reimbursement"));
 				r.setStatus(rs.getString("status"));
-				r.setInbox(rs.getString("inbox"));
-				r.setDestination(rs.getString("destination"));
-				r.setDatetimestamp(rs.getInt("datetimestamp"));
+				r.setInbox(rs.getInt("inbox"));
+				r.setDatetimestamp(rs.getDate("datetimestamp"));
 				r.setPriority(rs.getString("priority"));
 				r.setAmmountexceeded(rs.getString("ammountexceeded"));
 				r.setExceededreason(rs.getString("exceededreason"));
 				r.setBencoescalated(rs.getString("bencoescalated"));
+				r.setEmpapp(rs.getString("empapp"));
+				r.setSupapp(rs.getString("supapp"));
+				r.setMsnapp(rs.getString("msnapp"));
+				r.setDhdapp(rs.getString("dhdapp"));
+				r.setBenapp(rs.getString("benapp"));
+				r.setDenialreason(rs.getString("denialreason"));
 				r.setAccounts(rs.getInt("accounts"));
 				return r;
 			}	
@@ -113,15 +127,21 @@ public class RequestRepository implements RootRepository<Request> {
 				Request r = new Request();
 				r.setId(rs.getInt("id"));
 				r.setTitle(rs.getString("title"));
+				r.setStartDate(rs.getDate("startDate"));
 				r.setReimbursement(rs.getDouble("reimbursement"));
 				r.setStatus(rs.getString("status"));
-				r.setInbox(rs.getString("inbox"));
-				r.setDestination(rs.getString("destination"));
-				r.setDatetimestamp(rs.getInt("datetimestamp"));
+				r.setInbox(rs.getInt("inbox"));
+				r.setDatetimestamp(rs.getDate("datetimestamp"));
 				r.setPriority(rs.getString("priority"));
 				r.setAmmountexceeded(rs.getString("ammountexceeded"));
 				r.setExceededreason(rs.getString("exceededreason"));
 				r.setBencoescalated(rs.getString("bencoescalated"));
+				r.setEmpapp(rs.getString("empapp"));
+				r.setSupapp(rs.getString("supapp"));
+				r.setMsnapp(rs.getString("msnapp"));
+				r.setDhdapp(rs.getString("dhdapp"));
+				r.setBenapp(rs.getString("benapp"));
+				r.setDenialreason(rs.getString("denialreason"));
 				r.setAccounts(rs.getInt("accounts"));
 				
 				requests.add(r);
@@ -137,25 +157,31 @@ public class RequestRepository implements RootRepository<Request> {
 	@Override
 	public Request update(Request r) {
 		AppLogger.logger.info("Account table update record request.");
-		String sql = "update \"Project_1\".requests set id = ?, title = ? , reimbursement = ?, status = ?, inbox = ?,"
-					+ " destination = ?, datetimestamp = ?, priority = ?, ammountexceeded = ?, exceededreason = ?,"
-					+ " bencoescalated = ?, accounts = ? where id = ? returning *;";
+		String sql = "update \"Project_1\".requests set id = ?, title = ? , startDate = ?, reimbursement = ?, status = ?, inbox = ?,"
+					+ " datetimestamp = ?, priority = ?, ammountexceeded = ?, exceededreason = ?, bencoescalated = ?,"
+					+ " empapp = ?, supapp = ?, manapp = ?, dhdapp = ?, benapp = ?, denialreason = ?,"
+					+ " accounts = ? where id = ? returning *;";
 		
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, r.getId());
 			ps.setString(2, r.getTitle());
-			ps.setDouble(3, r.getReimbursement());
-			ps.setString(4, r.getStatus());
-			ps.setString(5, r.getInbox());
-			ps.setString(6, r.getDestination());
-			ps.setInt(7, r.getDatetimestamp());
+			ps.setDate(3, r.getStartDate());
+			ps.setDouble(4, r.getReimbursement());
+			ps.setString(5, r.getStatus());
+			ps.setInt(6, r.getInbox());
+			ps.setDate(7, r.getDatetimestamp());
 			ps.setString(8, r.getPriority());
 			ps.setString(9, r.getAmmountexceeded());
 			ps.setString(10, r.getExceededreason());
 			ps.setString(11, r.getBencoescalated());
-			ps.setInt(12, r.getAccounts());
-			ps.setInt(13, r.getId());
+			ps.setString(12, r.getEmpapp());
+			ps.setString(13, r.getSupapp());
+			ps.setString(14, r.getMsnapp());
+			ps.setString(15, r.getDhdapp());
+			ps.setString(16, r.getBenapp());
+			ps.setString(17, r.getDenialreason());
+			ps.setInt(18, r.getAccounts());
 			
 			boolean success = (ps.execute());
 			
@@ -165,15 +191,21 @@ public class RequestRepository implements RootRepository<Request> {
 				if (rs.next()) {
 					r.setId(rs.getInt("id"));
 					r.setTitle(rs.getString("title"));
+					r.setStartDate(rs.getDate("startDate"));
 					r.setReimbursement(rs.getDouble("reimbursement"));
 					r.setStatus(rs.getString("status"));
-					r.setInbox(rs.getString("inbox"));
-					r.setDestination(rs.getString("destination"));
-					r.setDatetimestamp(rs.getInt("datetimestamp"));
+					r.setInbox(rs.getInt("inbox"));
+					r.setDatetimestamp(rs.getDate("datetimestamp"));
 					r.setPriority(rs.getString("priority"));
 					r.setAmmountexceeded(rs.getString("ammountexceeded"));
 					r.setExceededreason(rs.getString("exceededreason"));
 					r.setBencoescalated(rs.getString("bencoescalated"));
+					r.setEmpapp(rs.getString("empapp"));
+					r.setSupapp(rs.getString("supapp"));
+					r.setMsnapp(rs.getString("msnapp"));
+					r.setDhdapp(rs.getString("dhdapp"));
+					r.setBenapp(rs.getString("benapp"));
+					r.setDenialreason(rs.getString("denialreason"));
 					r.setAccounts(rs.getInt("accounts"));
 					return r;
 				}
@@ -206,4 +238,167 @@ public class RequestRepository implements RootRepository<Request> {
 		return false;
 	}
 
+	public List<Request> getUserRequestShortListByAccount(Integer acc) {
+		AppLogger.logger.info("Account table view by ID request.");
+		String sql = "select * from \"Project_1\".requests where accounts = ?;";
+		List<Request> requests = new ArrayList<Request>();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, acc);
+			
+			ResultSet rs = ps.executeQuery();
+		
+			while (rs.next()) {
+				Request r = new Request();
+				r.setId(rs.getInt("id"));
+				r.setTitle(rs.getString("title"));
+				r.setStartDate(rs.getDate("startDate"));
+				r.setReimbursement(rs.getDouble("reimbursement"));
+				r.setStatus(rs.getString("status"));
+				r.setInbox(rs.getInt("inbox"));
+				r.setDatetimestamp(rs.getDate("datetimestamp"));
+				r.setPriority(rs.getString("priority"));
+				r.setAmmountexceeded(rs.getString("ammountexceeded"));
+				r.setExceededreason(rs.getString("exceededreason"));
+				r.setBencoescalated(rs.getString("bencoescalated"));
+				r.setEmpapp(rs.getString("empapp"));
+				r.setSupapp(rs.getString("supapp"));
+				r.setMsnapp(rs.getString("msnapp"));
+				r.setDhdapp(rs.getString("dhdapp"));
+				r.setBenapp(rs.getString("benapp"));
+				r.setDenialreason(rs.getString("denialreason"));
+				r.setAccounts(rs.getInt("accounts"));
+				
+				requests.add(r);
+			}
+			return requests;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<Request> getOtherRequestShortListByYear(User u, Integer year) {
+		AppLogger.logger.info("Account table view by ID request.");
+		String sql = null;
+//		String sql = "select * from \"Project_1\".requests left join \"Project_1\".requests"
+//				+ " on \"Project_1\".accounts.id = \"Project_1\".requests.accounts"
+//				+ " where year = ?, "
+//				+ "--order by \"Project_1\".requests.id desc;"
+//				+ ""
+//				+ "where accounts = ?;";
+		if ("supervisor".equals(u.getUtype())) {
+			sql = "select \"Project_1\".requests.* from \"Project_1\".users"
+					+ " left join \"Project_1\".accounts on \"Project_1\".accounts.users = \"Project_1\".users.id"
+					+ " left join \"Project_1\".requests on \"Project_1\".requests.accounts = \"Project_1\".accounts.id"
+					+ " where (ayear = ? and supervisor = ?);";
+		}
+		else if ("manager".equals(u.getUtype())) {
+			sql = "select \"Project_1\".requests.* from \"Project_1\".users"
+					+ " left join \"Project_1\".accounts on \"Project_1\".accounts.users = \"Project_1\".users.id"
+					+ " left join \"Project_1\".requests on \"Project_1\".requests.accounts = \"Project_1\".accounts.id"
+					+ " where (ear = ? and manager = ?);";
+		}
+		else if ("depthead".equals(u.getUtype())) {
+			sql = "select \"Project_1\".requests.* from \"Project_1\".users"
+					+ " left join \"Project_1\".accounts on \"Project_1\".accounts.users = \"Project_1\".users.id"
+					+ " left join \"Project_1\".requests on \"Project_1\".requests.accounts = \"Project_1\".accounts.id"
+					+ " where (ear = ? and depthead = ?);";
+		}
+		else if (("benco".equals(u.getUtype())) || ("bencosupervisor".equals(u.getUtype()))) {
+			sql = "select \"Project_1\".requests.* from \"Project_1\".users"
+					+ " left join \"Project_1\".accounts on \"Project_1\".accounts.users = \"Project_1\".users.id"
+					+ " left join \"Project_1\".requests on \"Project_1\".requests.accounts = \"Project_1\".accounts.id"
+					+ " where (ayear = ?);";
+		}
+		
+		List<Request> requests = new ArrayList<Request>();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, year);
+			ps.setInt(2, u.getId());
+			
+			ResultSet rs = ps.executeQuery();
+		
+			while (rs.next()) {
+				Request r = new Request();
+				r.setId(rs.getInt("id"));
+				r.setTitle(rs.getString("title"));
+				r.setStartDate(rs.getDate("startDate"));
+				r.setReimbursement(rs.getDouble("reimbursement"));
+				r.setStatus(rs.getString("status"));
+				r.setInbox(rs.getInt("inbox"));
+				r.setDatetimestamp(rs.getDate("datetimestamp"));
+				r.setPriority(rs.getString("priority"));
+				r.setAmmountexceeded(rs.getString("ammountexceeded"));
+				r.setExceededreason(rs.getString("exceededreason"));
+				r.setBencoescalated(rs.getString("bencoescalated"));
+				r.setEmpapp(rs.getString("empapp"));
+				r.setSupapp(rs.getString("supapp"));
+				r.setMsnapp(rs.getString("msnapp"));
+				r.setDhdapp(rs.getString("dhdapp"));
+				r.setBenapp(rs.getString("benapp"));
+				r.setDenialreason(rs.getString("denialreason"));
+				r.setAccounts(rs.getInt("accounts"));
+				
+				requests.add(r);
+			}
+			return requests;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<Request> getBencoRequestShortListByYear(Integer year) {
+		AppLogger.logger.info("Account table view by ID request.");
+		String sql = null;
+		sql = "select \"Project_1\".requests.* from \"Project_1\".users"
+				+ " left join \"Project_1\".accounts on \"Project_1\".accounts.users = \"Project_1\".users.id"
+				+ " left join \"Project_1\".requests on \"Project_1\".requests.accounts = \"Project_1\".accounts.id"
+				+ " where (ayear = ?);";
+		
+		List<Request> requests = new ArrayList<Request>();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, year);
+			
+			ResultSet rs = ps.executeQuery();
+		
+			while (rs.next()) {
+				Request r = new Request();
+				r.setId(rs.getInt("id"));
+				r.setTitle(rs.getString("title"));
+				r.setStartDate(rs.getDate("startDate"));
+				r.setReimbursement(rs.getDouble("reimbursement"));
+				r.setStatus(rs.getString("status"));
+				r.setInbox(rs.getInt("inbox"));
+				r.setDatetimestamp(rs.getDate("datetimestamp"));
+				r.setPriority(rs.getString("priority"));
+				r.setAmmountexceeded(rs.getString("ammountexceeded"));
+				r.setExceededreason(rs.getString("exceededreason"));
+				r.setBencoescalated(rs.getString("bencoescalated"));
+				r.setEmpapp(rs.getString("empapp"));
+				r.setSupapp(rs.getString("supapp"));
+				r.setMsnapp(rs.getString("msnapp"));
+				r.setDhdapp(rs.getString("dhdapp"));
+				r.setBenapp(rs.getString("benapp"));
+				r.setDenialreason(rs.getString("denialreason"));
+				r.setAccounts(rs.getInt("accounts"));
+				
+				requests.add(r);
+			}
+			return requests;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
+

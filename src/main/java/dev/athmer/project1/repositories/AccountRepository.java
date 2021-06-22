@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.athmer.project1.beans.Account;
+import dev.athmer.project1.beans.User;
 import dev.athmer.project1.logging.AppLogger;
 import dev.athmer.project1.utilities.JDBCConnection;
 
@@ -168,94 +169,66 @@ public class AccountRepository implements RootRepository<Account> {
 		}
 		return false;
 	}
+	
+	
+	public List<Account> getByUser(Integer userid) { //delete?
+		AppLogger.logger.info("Account table view by user request.");
+		List<Account> accounts = new ArrayList<Account>();
+		
+		String sql = "select * from \"Project_1\".accounts where users = ?;";
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, userid);
+			
+			ResultSet rs = ps.executeQuery();
+		
+			while (rs.next()) {
+				Account a = new Account();
+				a.setId(rs.getInt("id"));
+				a.setAyear(rs.getInt("ayear"));
+				a.setBalance(rs.getDouble("balance"));
+				a.setPending(rs.getDouble("pending"));
+				a.setReimbursed(rs.getDouble("reimbursed"));
+				a.setUsers(rs.getInt("users"));
+				
+				accounts.add(a);
+			}
+			return accounts;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public Account getByUserYear(User u, Integer y) {
+		AppLogger.logger.info("Account table view by ID request.");
+		String sql = "select * from \"Project_1\".accounts where users = ?, ayear = ?;";
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, u.getId());
+			ps.setInt(1, y);
+			
+			ResultSet rs = ps.executeQuery();
+		
+			if (rs.next()) {
+				Account a = new Account();
+				a.setId(rs.getInt("id"));
+				a.setAyear(rs.getInt("ayear"));
+				a.setBalance(rs.getDouble("balance"));
+				a.setPending(rs.getDouble("pending"));
+				a.setReimbursed(rs.getDouble("reimbursed"));
+				a.setUsers(rs.getInt("users"));
+				return a;
+			}	
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-//	public List<Account> getByAstatus(String astatus) { // delete?
-//		AppLogger.logger.info("Account table view by status request.");
-//		List<Account> accounts = new ArrayList<Account>();
-//		
-//		String sql = "select * from \"Project_1\".accounts where astatus = ?;";
-//		
-//		try {
-//			PreparedStatement ps = conn.prepareStatement(sql);
-//			ps.setString(1, astatus);
-//			
-//			ResultSet rs = ps.executeQuery();
-//		
-//			while (rs.next()) {
-//				Account a = new Account();
-//				a.setId(rs.getInt("id"));
-//				a.setAccnumber(rs.getInt("accnumber"));
-//				a.setAtype(rs.getString("atype"));
-//				a.setBalance(rs.getDouble("balance"));
-//				a.setAstatus(rs.getString("astatus"));
-//				a.setUsers(rs.getInt("users"));
-//				
-//				accounts.add(a);
-//			}
-//			return accounts;
-//		}
-//		catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//
-//	public List<Account> getByUser(Integer userid) { //delete?
-//		AppLogger.logger.info("Account table view by user request.");
-//		List<Account> accounts = new ArrayList<Account>();
-//		
-//		String sql = "select * from \"Project_1\".accounts where users = ?;";
-//		
-//		try {
-//			PreparedStatement ps = conn.prepareStatement(sql);
-//			ps.setInt(1, userid);
-//			
-//			ResultSet rs = ps.executeQuery();
-//		
-//			while (rs.next()) {
-//				Account a = new Account();
-//				a.setId(rs.getInt("id"));
-//				a.setAccnumber(rs.getInt("accnumber"));
-//				a.setAtype(rs.getString("atype"));
-//				a.setBalance(rs.getDouble("balance"));
-//				a.setAstatus(rs.getString("astatus"));
-//				a.setUsers(rs.getInt("users"));
-//				
-//				accounts.add(a);
-//			}
-//			return accounts;
-//		}
-//		catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//	
-//	public Account getByAccNumber(Integer accnum) { //delete?
-//		AppLogger.logger.info("Account table view by account number request.");
-//		String sql = "select * from \"Project_1\".accounts where accnumber = ?;";
-//		
-//		try {
-//			PreparedStatement ps = conn.prepareStatement(sql);
-//			ps.setInt(1, accnum);
-//			
-//			ResultSet rs = ps.executeQuery();
-//		
-//			if (rs.next()) {
-//				Account a = new Account();
-//				a.setId(rs.getInt("id"));
-//				a.setAccnumber(rs.getInt("accnumber"));
-//				a.setAtype(rs.getString("atype"));
-//				a.setBalance(rs.getDouble("balance"));
-//				a.setAstatus(rs.getString("astatus"));
-//				a.setUsers(rs.getInt("users"));
-//				return a;
-//			}
-//		}
-//		catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
 
 }

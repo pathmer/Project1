@@ -1,5 +1,5 @@
 function login() {
-    let url = 'http://localhost:8080/Project1/login';
+    let url = 'http://localhost:8080/Project1/site/login';
 
     // collect user input
 
@@ -14,21 +14,19 @@ function login() {
     }
     else {passw = " "}
 
-    let userlist = [usern, passw]
+    let userlist = [usern, passw];
 
     let user = {
         usernames: usern,
         passwords: passw,
     }
 
-    let activeuser = {}
     let loginstatus = document.getElementById("loginstatus");
 
     // AJAX Call
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = recieveUser;
     xhttp.open("POST", url, true);
-    //xhttp.setRequestHeader('Access-Control-Allow-Origin', '*');
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(JSON.stringify(user));
 
@@ -37,15 +35,14 @@ function login() {
             if (xhttp.status == 200) {
                 console.log('Server talking');
                 let r = xhttp.responseText;
-                    if (r == "Post requestnull") {
+                    if (r != "true") {
                         loginstatus.innerHTML = 'Login failed.';
                         console.log("null response");
                     }
                     else {
-                        activeuser = r
+                        activeuser = r;
                         loginstatus.innerHTML = 'Login successful.';
-                        window.location = "/Project1/html/HomePage.html"
-                        console.log("Booya");
+                        window.location = "/Project1/html/HomePage.html";
                     }
             }
             else {

@@ -12,7 +12,6 @@ public class LoginServices {
 	public User login(User u) {
 
 		activeuser = ur.getByUsername(u.getUsernames());
-		//System.out.println("LoginServices: " + activeuser);
 		if (u.getPasswords().equals(activeuser.getPasswords())) {
 			return activeuser;
 		}

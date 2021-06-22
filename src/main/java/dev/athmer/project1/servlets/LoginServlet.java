@@ -56,7 +56,7 @@ public class LoginServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.getWriter().append("Post request");
+		//response.getWriter().append("Post request");
 		String uri = request.getRequestURI();
 		
 		System.out.println(uri);

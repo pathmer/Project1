@@ -18,19 +18,18 @@ public class FormDataRepository implements RootRepository<FormData> {
 	@Override
 	public FormData add(FormData f) {
 		AppLogger.logger.info("Account table add record request.");
-		String sql = "insert into \"Project_1\".formdata values (default, ?, ?, ?, ?, ?, ?, ?, ?, default, ?) returning *;";
+		String sql = "insert into \"Project_1\".formdata values (default, ?, ?, ?, ?, ?, ?, ?, default, ?) returning *;";
 		
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, f.getStartDate());
-			ps.setInt(2, f.getTimes());
-			ps.setString(3, f.getLocations());
-			ps.setString(4, f.getDescription());
-			ps.setDouble(5, f.getCosts());
-			ps.setString(6, f.getGradeFormat());
-			ps.setString(7, f.getEventType());
-			ps.setString(8, f.getJustification());
-			ps.setInt(9, f.getRequests());
+			ps.setInt(1, f.getTimes());
+			ps.setString(2, f.getLocations());
+			ps.setString(3, f.getDescription());
+			ps.setDouble(4, f.getCosts());
+			ps.setString(5, f.getGradeFormat());
+			ps.setString(6, f.getEventType());
+			ps.setString(7, f.getJustification());
+			ps.setInt(8, f.getRequests());
 			
 			boolean success = ps.execute();
 			
@@ -39,7 +38,6 @@ public class FormDataRepository implements RootRepository<FormData> {
 				
 				if (rs.next()) {
 					f.setId(rs.getInt("id"));
-					f.setStartDate(rs.getInt("startDate"));
 					f.setTimes(rs.getInt("times"));
 					f.setLocations(rs.getString("locations"));
 					f.setDescription(rs.getString("description"));
@@ -75,7 +73,6 @@ public class FormDataRepository implements RootRepository<FormData> {
 			if (rs.next()) {
 				FormData f = new FormData();
 				f.setId(rs.getInt("id"));
-				f.setStartDate(rs.getInt("startDate"));
 				f.setTimes(rs.getInt("times"));
 				f.setLocations(rs.getString("locations"));
 				f.setDescription(rs.getString("description"));
@@ -109,7 +106,6 @@ public class FormDataRepository implements RootRepository<FormData> {
 			while (rs.next()) {
 				FormData f = new FormData();
 				f.setId(rs.getInt("id"));
-				f.setStartDate(rs.getInt("startDate"));
 				f.setTimes(rs.getInt("times"));
 				f.setLocations(rs.getString("locations"));
 				f.setDescription(rs.getString("description"));
@@ -133,24 +129,23 @@ public class FormDataRepository implements RootRepository<FormData> {
 	@Override
 	public FormData update(FormData f) {
 		AppLogger.logger.info("Account table update record request.");
-		String sql = "update \"Project_1\".formdata set id = ?, startDate = ? , times = ?, locations = ?, description = ?,"
+		String sql = "update \"Project_1\".formdata set id = ?, times = ?, locations = ?, description = ?,"
 				+ " costs = ?, gradeFormat = ?, eventType = ?, justification = ?, missedWorkhrsperwk = ?, requests = ?"
 				+ " where id = ? returning *;";
 		
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, f.getId());
-			ps.setInt(2, f.getStartDate());
-			ps.setInt(3, f.getTimes());
-			ps.setString(4, f.getLocations());
-			ps.setString(5, f.getDescription());
-			ps.setDouble(6, f.getCosts());
-			ps.setString(7, f.getGradeFormat());
-			ps.setString(8, f.getEventType());
-			ps.setString(9, f.getJustification());
-			ps.setInt(10, f.getMissedWorkhrsperwk());
-			ps.setInt(11, f.getRequests());
-			ps.setInt(12, f.getId());
+			ps.setInt(2, f.getTimes());
+			ps.setString(3, f.getLocations());
+			ps.setString(4, f.getDescription());
+			ps.setDouble(5, f.getCosts());
+			ps.setString(6, f.getGradeFormat());
+			ps.setString(7, f.getEventType());
+			ps.setString(8, f.getJustification());
+			ps.setInt(9, f.getMissedWorkhrsperwk());
+			ps.setInt(10, f.getRequests());
+			ps.setInt(11, f.getId());
 			
 			boolean success = (ps.execute());
 			
@@ -159,7 +154,6 @@ public class FormDataRepository implements RootRepository<FormData> {
 				
 				if (rs.next()) {
 					f.setId(rs.getInt("id"));
-					f.setStartDate(rs.getInt("startDate"));
 					f.setTimes(rs.getInt("times"));
 					f.setLocations(rs.getString("locations"));
 					f.setDescription(rs.getString("description"));
@@ -198,6 +192,40 @@ public class FormDataRepository implements RootRepository<FormData> {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public List<FormData> getByAccount(Integer id) {
+		AppLogger.logger.info("Account table view by ID request.");
+		String sql = "select * from from \"Project_1\".requests left join \"Project_1\".formdata"
+				+ " on \"Project_1\".requests.id = \"Project_1\".formdata.requests where accounts = ?;";
+		
+		List<FormData> formdata = new ArrayList<FormData>();
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			
+			ResultSet rs = ps.executeQuery();
+		
+			while (rs.next()) {
+				FormData f = new FormData();
+				f.setId(rs.getInt("id"));
+				f.setTimes(rs.getInt("times"));
+				f.setLocations(rs.getString("locations"));
+				f.setDescription(rs.getString("description"));
+				f.setCosts(rs.getDouble("costs"));
+				f.setGradeFormat(rs.getString("gradeFormat"));
+				f.setEventType(rs.getString("eventType"));
+				f.setJustification(rs.getString("justification"));
+				f.setMissedWorkhrsperwk(rs.getInt("missedWorkhrsperwk"));
+				f.setRequests(rs.getInt("requests"));
+				formdata.add(f);
+			}
+			return formdata;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

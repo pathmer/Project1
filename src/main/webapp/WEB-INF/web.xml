@@ -3,16 +3,16 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
- 
+ 	
+	<display-name>Archetype Created Web Application</display-name>
 	<servlet>
 		<servlet-name>FrontController</servlet-name>
-		<servlet-class>dev.athmer.servlets.FrontControllerServlet</servlet-class>
+		<servlet-class>dev.athmer.project1.servlets.FrontControllerServlet</servlet-class>
 	</servlet>	
 
 	<servlet-mapping>
 		<servlet-name>FrontController</servlet-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/site/*</url-pattern>
 	</servlet-mapping>
   
 </web-app>
