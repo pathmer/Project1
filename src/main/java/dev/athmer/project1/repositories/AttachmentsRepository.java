@@ -165,4 +165,32 @@ public class AttachmentsRepository implements RootRepository<Attachments> {
 		}
 		return false;
 	}
+	
+	public Attachments getByRequestId(Integer id) {
+		AppLogger.logger.info("Account table view by ID request.");
+		String sql = "select * from \"Project_1\".attachments where requests = ?;";
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			
+			ResultSet rs = ps.executeQuery();
+		
+			if (rs.next()) {
+				Attachments a = new Attachments();
+				a.setId(rs.getInt("id"));
+				a.setOptattachments(rs.getString("optattachments"));
+				a.setMsgsupapproval(rs.getString("msgsupapproval"));
+				a.setMsgdephdapproval(rs.getString("msgdephdapproval"));
+				a.setGradepresentation(rs.getString("gradepresentation"));
+				a.setRequests(rs.getInt("requests"));
+				return a;			
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

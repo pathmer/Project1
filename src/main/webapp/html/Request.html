@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
     <title>New TRMS Request</title>
+</head>
+<body onload = 'refreshrequestpage()'>
+    <label for='logintitle'>New TRMS Request</label>
     <br>
     <button id='submit' type='button' onclick='submitrequest()'>Submit</button>
     <button id='cancel' type='button' onclick='cancel()'>Cancel</button>
@@ -22,8 +22,8 @@
                 <label for='startDate'>Start Date:</label>
                 <input id='startDate'type='date' placeholder="date">
                 <br>
-                <label for='times'>Time:</label>
-                <input id='times'type='time' placeholder="time">
+                <label for='times'>Time (Hour):</label>
+                <input id='times'type='number' min="0" max="23"placeholder="time">
                 <br>
                 <label for='locations'>Location:</label>
                 <input id='locations'type='text' placeholder="location">
@@ -31,32 +31,41 @@
                 <label for='description'>Description:</label>
                 <input id='description'type='text' placeholder="description">
                 <br>
-                <label for='costs'>Cost:</label>
-                <input id='costs'type='number' placeholder="cost">
+                <label for='costs'>Cost $:</label>
+                <input id='costs'type='number' value="0.00">
                 <br>
                 <label for='gradeFormat'>Grade Format:</label>
                 <input id='gradeFormat'type='text' placeholder="Grade Format">
                 <br>
                 <label for='eventType'>Event Type:</label>
-                <input id='eventType'type='text' placeholder="Event Type">
+                <select name="Event Type" id="eventType" value="certification">
+                    <option value="certification">Certification 100%</option>
+                    <option value="techtrain">Technical Training 90%</option>
+                    <option value="unicourse">University Course 80%</option>
+                    <option value="certclass">Certification Class 75%</option>
+                    <option value="seminar">Seminar 60%</option>
+                    <option value="other">Other 30%</option>
+                </select>
+
+
                 <br>
                 <label for='justification'>Justification:</label>
                 <input id='justification'type='text' placeholder="Justification">
                 <br>
                 <label for='missedWorkhrsperwk'>Missed Work hrs/wk:</label>
-                <input id='missedWorkhrsperwk'type='number' placeholder="Missed Work hrs/wk">
+                <input id='missedWorkhrsperwk'type='number' min="0" max="40"placeholder="Missed Work hrs/wk">
                 <br>
             </div>
             <br>
             <div class="form-control">
                 <br>
-                <label for='estreimbursement'>Estimated Reimbursement:</label>
-                <label id='estreimbursement'>$:</label>
+                <label for='estreimbursement'>Estimated Reimbursement $:</label>
+                <label id='estreimbursement'>0.0</label>
                 <br>
             </div>
         </form>
     </div>
-    <script src='../scripts/Homepage.js'></script>
+    <script src='../scripts/Requests.js'></script>
 </body>
 </html>
 

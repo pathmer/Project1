@@ -26,6 +26,11 @@ public class Attachments {
 		this.requests = requests;
 	}
 
+	public Attachments(Integer requests) {
+		super();
+		this.requests = requests;
+	}
+
 
 	public Integer getId() {
 		return id;

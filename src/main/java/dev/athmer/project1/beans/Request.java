@@ -54,11 +54,17 @@ public class Request {
 		this.denialreason = denialreason;
 		this.accounts = accounts;
 	}
-	
-	public Request(String title, Date startDate) {
+
+	public Request(String title, Date startDate, Double reimbursement) {
 		super();
 		this.title = title;
 		this.startDate = startDate;
+		this.reimbursement = reimbursement;
+	}
+
+	public Request(Integer id) {
+		super();
+		this.id = id;
 	}
 
 	public Integer getId() {

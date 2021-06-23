@@ -1,15 +1,16 @@
 package dev.athmer.project1.services;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import dev.athmer.project1.beans.Account;
+import dev.athmer.project1.beans.Attachments;
 import dev.athmer.project1.beans.FormData;
 import dev.athmer.project1.beans.Request;
 import dev.athmer.project1.beans.User;
 import dev.athmer.project1.repositories.AccountRepository;
+import dev.athmer.project1.repositories.AttachmentsRepository;
 import dev.athmer.project1.repositories.FormDataRepository;
 import dev.athmer.project1.repositories.RequestRepository;
 import dev.athmer.project1.repositories.UserRepository;
@@ -19,6 +20,7 @@ public class EmployeeServices {
 	public static AccountRepository ar = new AccountRepository();
 	public static RequestRepository rr = new RequestRepository();
 	public static FormDataRepository fr = new FormDataRepository();
+	public static AttachmentsRepository attr = new AttachmentsRepository();
 
 	public Account getAccount(User u, Integer year) {
 		Account account = null;
@@ -52,7 +54,7 @@ public class EmployeeServices {
 		return formdata;
 	}
 	
-	public void addRequest(Request r, User u, Account a) {
+	public Request addRequest(Request r, User u, Account a) {
 		r.setAccounts(a.getId());
 		r.setStatus("pending");
 		r.setPriority("normal");
@@ -71,13 +73,42 @@ public class EmployeeServices {
 		else if ("benco".equals(u.getUtype())) {
 			inbox = 6;
 		}
-		
-		r.setReimbursement(0.0);
 		r.setInbox(inbox);
 		
-		rr.add(r);
+		Request  newrequest = rr.add(r);
 		
-		// need to update account
-		// need to update priority elsewhere
+		a.setBalance(a.getBalance() - r.getReimbursement());
+		a.setPending(a.getPending() + r.getReimbursement());
+		ar.update(a);
+
+		return newrequest;
+	}
+	
+	public void addFormData(FormData f) {
+
+		fr.add(f);
+	}
+	
+	public void addAttachments(Attachments a) {
+
+		attr.add(a);
+	}
+	
+	public Request getRequest(Request r) {
+
+		Request request = rr.getById(r.getId());
+		
+		return request;
+	}
+	public FormData getFormData(Request r) {
+
+		FormData formdata = fr.getByRequestId(r.getId());
+		
+		return formdata;
+	}
+	public Attachments getAttachments(Request r) {
+
+		Attachments attachments = attr.getByRequestId(r.getId());
+		return attachments;
 	}
 }

@@ -4,16 +4,63 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>View/Edit Request</title>
 </head>
-<body>
-    <button id='save' type='button' onclick='save()'>Save</button>
-    <button id='cancel' type='button' onclick='cancel()'>Cancel</button>
+<body onload = 'refresheditrequestpage()'>
+    <label for='logintitle'>Request Handling Page</label>
     <br>
     <br>
+    <button id='return' type='button' onclick='cancel()'>Return to Homepage</button>
     <br>
+    <br>
+    <div id="requestFormData">
+        <label for='requestFormData'>Request Details</label>
+        <table class='table table-dark table-striped'>
+        </table>
+    </div>
+    <br>
+    <br>
+    <div id="requestprocessing">
+        <label for='otherRequestsSection'>Request Processing</label>
+        <table class='table table-dark table-striped'>
+        </table>
+    </div>
+
+
+
+
+
+
+
+    <br>
+    <br>
+    <button id='approve' type='button' onclick='cancel()'>Approve</button>
+    <button id='deny' type='button' onclick='cancel()'>Deny Request</button>
+    <label for='denyreason'>Reason for denial:</label>
+    <input id='denyreason'type='text' placeholder="Must enter a reason for denial to process.">
+    <br>
+    <br>
+    <button id='amount' type='button' onclick='cancel()'>Change Amount</button>
+    <label for='ammountchange'>New Reimbursement Amount $:</label>
+    <input id='ammountchange'type='number' placeholder="0.00">
+    <br>
+    <br>
+    <button id='requestinfo' type='button' onclick='cancel()'>Request Information</button>
     <button id='addattachments' type='button' onclick='addattachments()'>Add Attachments</button>
     <br>
-    <script src='../scripts/Homepage.js'></script>
+    <br>
+    <button id='complete' type='button' onclick='cancel()'>Complete Reimbursement</button>
+    <br>
+    <br>
+
+
+
+
+
+
+
+    <br>
+    <br>
+    <script src='../scripts/EditRequest.js'></script>
 </body>
 </html>

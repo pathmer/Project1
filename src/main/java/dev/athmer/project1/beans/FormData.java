@@ -35,6 +35,21 @@ public class FormData {
 	}
 
 
+	public FormData(Integer times, String locations, String description, Double costs, String gradeFormat,
+			String eventType, String justification, Integer missedWorkhrsperwk, Integer requests) {
+		super();
+		this.times = times;
+		this.locations = locations;
+		this.description = description;
+		this.costs = costs;
+		this.gradeFormat = gradeFormat;
+		this.eventType = eventType;
+		this.justification = justification;
+		this.missedWorkhrsperwk = missedWorkhrsperwk;
+		this.requests = requests;
+	}
+
+
 	public Integer getId() {
 		return id;
 	}

@@ -2,122 +2,15 @@ let url = "";
 var d = new Date();
 var currentyear = d.getFullYear();
 
+
 function newrequestpage() {
     window.location = "/Project1/html/Request.html"
 }
 
-function submitrequest(){
-    newrequest();
-    // setTimeout(function(){
-    //     newformdata();
-    // },100);
-    // setTimeout(function(){
-    //     newattachments();
-    // },100);
-    // setTimeout(function(){
-    //     updateformdata();
-    // },100);
-    setTimeout(function(){
-        //window.location = "/Project1/html/HomePage.html"
-    },100);
-}
-
-
-function newrequest() {
-    let url = 'http://localhost:8080/Project1/site/addRequest';
-
-    // collect user input
-    let rtitle = document.getElementById('title').value;
-    let rstartDate = document.getElementById('startDate').value;
-
-    // create request object
-    let request = {
-        title: rtitle,
-        startDate: rstartDate,
-    }
-    console.log(request);
-    // AJAX Call
-    let xhttpnewrequest = new XMLHttpRequest();
-    let newrequestsend = JSON.stringify(request)
-    function newrequestfunc() {
-        console.log('newrequest success');
-    }
-    sendrequest(xhttpnewrequest, url, "POST", newrequestfunc, newrequestsend)
-}
-
-function newformdata () {
-    let url = 'http://localhost:8080/Project1/site/addFormdata';
-
-    let rtimes = document.getElementById('times').value;
-    let rlocations = document.getElementById('locations').value;
-    let rdescription = document.getElementById('description').value;
-    let rcosts = document.getElementById('costs').value;
-    let rgradeFormat = document.getElementById('gradeFormat').value;
-    let reventType = document.getElementById('eventType').value;
-    let rjustification = document.getElementById('justification').value;
-
-    let formdata = {
-        times: rtimes,
-        locations: rlocations,
-        description: rdescription,
-        costs: rcosts,
-        gradeFormat: rgradeFormat,
-        eventType: reventType,
-        justification: rjustification,
-    }
-
-    // AJAX Call
-    let xhttpnewformdata = new XMLHttpRequest();
-    let nnewformdatasend = JSON.stringify(formdata)
-    function newformdatafunc() {
-        console.log('newformdata success');
-    }
-    sendrequest(xhttpnewformdata, url, "POST", newformdatafunc, nnewformdatasend)
-}
-
-function newattachments () {
-    let url = 'http://localhost:8080/Project1/site/addattachments';
-
-    let attachments = {
-    }
-
-    // AJAX Call
-    let xhttpnewattachments = new XMLHttpRequest();
-    let newattachmentssend = JSON.stringify(attachments)
-    function newattachmentsfunc() {
-        console.log('newattachments success');
-    }
-    sendrequest(xhttpnewattachments, url, "POST", newattachmentsfunc, newattachmentssend)
-}
-
-function updateformdata () {
-    let url = 'http://localhost:8080/Project1/site/updateFormdata';
-
-    let rmissedWorkhrsperwk = document.getElementById('missedWorkhrsperwk').value;
-
-    let formdata2 = {
-        missedWorkhrsperwk: rmissedWorkhrsperwk,
-    }
-
-
-
-
-
-
-
-
-
-}
-
-function cancel() {
-    window.location = "/Project1/html/HomePage.html"
-}
-
-
 function logout() {
     let url = 'http://localhost:8080/Project1/site/logout';
     let xhttplogout = new XMLHttpRequest();
-    let accountsend = JSON.stringify(null)
+    let accountsend = JSON.stringify(null);
     function logoutfunc() {
         let r = xhttplogout.responseText;
         r = JSON.parse(r);
@@ -125,22 +18,23 @@ function logout() {
             window.location = "/Project1/html/Login.html"
         }
     }
-    sendrequest(xhttplogout, url, "GET", logoutfunc, accountsend)
+    sendrequest(xhttplogout, url, "GET", logoutfunc, accountsend);
 }
 
 
-function editrequest() {
+function editrequest(thisrequestid) {
+    url = 'http://localhost:8080/Project1/site/setselectedrequest';
+    let xhttpsetactiverequest = new XMLHttpRequest();
+    requestid = {
+        id : thisrequestid
+    }
+    let setactiverequestsend = JSON.stringify(requestid);
+    function setactiverequestfunc() {
+        console.log("success");
+    }
+    sendrequest(xhttpsetactiverequest, url, "POST", setactiverequestfunc, setactiverequestsend);
+
     window.location = "/Project1/html/EditRequest.html"
-}
-
-
-function save() {
-    window.location = "/Project1/html/HomePage.html"
-}
-
-
-function addattachments() {
-    window.location = "/Project1/html/AddAttachments.html"
 }
 
 function refreshhomepage() {
@@ -149,28 +43,12 @@ function refreshhomepage() {
     changeyear();
 }
 
-function sendrequest(xhttp, url, GETPOST, funcstuff, send) {
-    // AJAX Call
-    //console.log(url, GETPOST, funcstuff, send);
-    xhttp.onreadystatechange = sendrequestfunc;
-    xhttp.open(GETPOST, url, true);
-    xhttp.setRequestHeader('Content-Type', 'application/json');
-    xhttp.send(send);
-    function sendrequestfunc() {
-        if (xhttp.readyState == 4) {
-            if (xhttp.status == 200) {
-                funcstuff();
-            }
-        }
-    }
-}
-
 function changeyear() {
     // Update account info
     url = 'http://localhost:8080/Project1/site/getaccount';
     let xhttpchangeyear = new XMLHttpRequest();
     let accyear = document.getElementById('year').value;
-    let accountsend = JSON.stringify(accyear)
+    let accountsend = JSON.stringify(accyear);
     function accountfunc() {
         let account = xhttpchangeyear.responseText;
         account = JSON.parse(account);
@@ -185,7 +63,8 @@ function changeyear() {
             reimbursed.innerHTML = '$ ';
         }
     }
-    sendrequest(xhttpchangeyear, url, "POST", accountfunc, accountsend)
+    sendrequest(xhttpchangeyear, url, "POST", accountfunc, accountsend);
+
     setTimeout(function(){
         getusershortrequests();
     },100);
@@ -201,8 +80,6 @@ function getusershortrequests() {
     function userrequestsfunc() {
         let userrequests = xhttpgetusershortrequests.responseText;
         userrequests = JSON.parse(userrequests);
-
-        console.log(userrequests);
         
         // Create a table
         let userRequestsSection = document.getElementById('userRequestsSection');
@@ -226,7 +103,8 @@ function getusershortrequests() {
         if (userrequests != null) {
             for (let request of userrequests) {
                 let tr = document.createElement('tr');
-                tr.setAttribute('onclick', 'editrequest()');
+                tr.value = request.id;
+                tr.setAttribute('onclick', 'editrequest(this.value)');
 
                 let tdTitle = document.createElement('td');
                 tdTitle.innerHTML = request.title;
@@ -253,7 +131,7 @@ function getusershortrequests() {
         }
         userRequestsSection.appendChild(userrequestsTable);
     }
-    sendrequest(xhttpgetusershortrequests, url, "GET", userrequestsfunc, userrequestsend)
+    sendrequest(xhttpgetusershortrequests, url, "GET", userrequestsfunc, userrequestsend);
 }
 
 function getothershortrequests() {
@@ -263,8 +141,6 @@ function getothershortrequests() {
     function otherrequestsfunc() {
         let otherrequests = xhttpgetothershortrequests.responseText;
         otherrequests = JSON.parse(otherrequests);
-
-        console.log(otherrequests);
         
         // Create a table
         let otherRequestsSection = document.getElementById('otherRequestsSection');
@@ -315,5 +191,21 @@ function getothershortrequests() {
         }
         otherRequestsSection.appendChild(otherrequestsTable);
     }
-    sendrequest(xhttpgetothershortrequests, url, "GET", otherrequestsfunc, otherrequestsend)
+    sendrequest(xhttpgetothershortrequests, url, "GET", otherrequestsfunc, otherrequestsend);
+}
+
+function sendrequest(xhttp, url, GETPOST, funcstuff, send) {
+    // AJAX Call
+    //console.log(url, GETPOST, funcstuff, send);
+    xhttp.onreadystatechange = sendrequestfunc;
+    xhttp.open(GETPOST, url, true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(send);
+    function sendrequestfunc() {
+        if (xhttp.readyState == 4) {
+            if (xhttp.status == 200) {
+                funcstuff();
+            }
+        }
+    }
 }

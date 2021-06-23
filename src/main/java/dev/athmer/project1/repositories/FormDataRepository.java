@@ -18,7 +18,7 @@ public class FormDataRepository implements RootRepository<FormData> {
 	@Override
 	public FormData add(FormData f) {
 		AppLogger.logger.info("Account table add record request.");
-		String sql = "insert into \"Project_1\".formdata values (default, ?, ?, ?, ?, ?, ?, ?, default, ?) returning *;";
+		String sql = "insert into \"Project_1\".formdata values (default, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning *;";
 		
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -29,7 +29,8 @@ public class FormDataRepository implements RootRepository<FormData> {
 			ps.setString(5, f.getGradeFormat());
 			ps.setString(6, f.getEventType());
 			ps.setString(7, f.getJustification());
-			ps.setInt(8, f.getRequests());
+			ps.setInt(8, f.getMissedWorkhrsperwk());
+			ps.setInt(9, f.getRequests());
 			
 			boolean success = ps.execute();
 			
@@ -221,6 +222,37 @@ public class FormDataRepository implements RootRepository<FormData> {
 				formdata.add(f);
 			}
 			return formdata;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public FormData getByRequestId(Integer id) {
+		AppLogger.logger.info("Account table view by ID request.");
+		String sql = "select * from \"Project_1\".formdata where requests = ?;";
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			
+			ResultSet rs = ps.executeQuery();
+		
+			if (rs.next()) {
+				FormData f = new FormData();
+				f.setId(rs.getInt("id"));
+				f.setTimes(rs.getInt("times"));
+				f.setLocations(rs.getString("locations"));
+				f.setDescription(rs.getString("description"));
+				f.setCosts(rs.getDouble("costs"));
+				f.setGradeFormat(rs.getString("gradeFormat"));
+				f.setEventType(rs.getString("eventType"));
+				f.setJustification(rs.getString("justification"));
+				f.setMissedWorkhrsperwk(rs.getInt("missedWorkhrsperwk"));
+				f.setRequests(rs.getInt("requests"));
+				return f;
+			}
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
