@@ -13,12 +13,12 @@ public class Request {
 	private Integer inbox;
 	private Date datetimestamp;
 	private String priority;
-	private String ammountexceeded;
+	private String amountexceeded;
 	private String exceededreason;
 	private String bencoescalated;
 	private String empapp;
 	private String supapp;
-	private String msnapp;
+	private String manapp;
 	private String dhdapp;
 	private String benapp;
 	private String denialreason;
@@ -31,8 +31,8 @@ public class Request {
 	}
 
 	public Request(Integer id, String title, Date startDate, Double reimbursement, String status, Integer inbox,
-			Date datetimestamp, String priority, String ammountexceeded, String exceededreason, String bencoescalated,
-			String empapp, String supapp, String msnapp, String dhdapp, String benapp, String denialreason,
+			Date datetimestamp, String priority, String amountexceeded, String exceededreason, String bencoescalated,
+			String empapp, String supapp, String manapp, String dhdapp, String benapp, String denialreason,
 			Integer accounts) {
 		super();
 		this.id = id;
@@ -43,12 +43,12 @@ public class Request {
 		this.inbox = inbox;
 		this.datetimestamp = datetimestamp;
 		this.priority = priority;
-		this.ammountexceeded = ammountexceeded;
+		this.amountexceeded = amountexceeded;
 		this.exceededreason = exceededreason;
 		this.bencoescalated = bencoescalated;
 		this.empapp = empapp;
 		this.supapp = supapp;
-		this.msnapp = msnapp;
+		this.manapp = manapp;
 		this.dhdapp = dhdapp;
 		this.benapp = benapp;
 		this.denialreason = denialreason;
@@ -131,12 +131,12 @@ public class Request {
 		this.priority = priority;
 	}
 
-	public String getAmmountexceeded() {
-		return ammountexceeded;
+	public String getAmountexceeded() {
+		return amountexceeded;
 	}
 
-	public void setAmmountexceeded(String ammountexceeded) {
-		this.ammountexceeded = ammountexceeded;
+	public void setAmountexceeded(String amountexceeded) {
+		this.amountexceeded = amountexceeded;
 	}
 
 	public String getExceededreason() {
@@ -171,12 +171,12 @@ public class Request {
 		this.supapp = supapp;
 	}
 
-	public String getMsnapp() {
-		return msnapp;
+	public String getManapp() {
+		return manapp;
 	}
 
-	public void setMsnapp(String msnapp) {
-		this.msnapp = msnapp;
+	public void setManapp(String manapp) {
+		this.manapp = manapp;
 	}
 
 	public String getDhdapp() {
@@ -216,7 +216,7 @@ public class Request {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((accounts == null) ? 0 : accounts.hashCode());
-		result = prime * result + ((ammountexceeded == null) ? 0 : ammountexceeded.hashCode());
+		result = prime * result + ((amountexceeded == null) ? 0 : amountexceeded.hashCode());
 		result = prime * result + ((benapp == null) ? 0 : benapp.hashCode());
 		result = prime * result + ((bencoescalated == null) ? 0 : bencoescalated.hashCode());
 		result = prime * result + ((datetimestamp == null) ? 0 : datetimestamp.hashCode());
@@ -226,7 +226,7 @@ public class Request {
 		result = prime * result + ((exceededreason == null) ? 0 : exceededreason.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((inbox == null) ? 0 : inbox.hashCode());
-		result = prime * result + ((msnapp == null) ? 0 : msnapp.hashCode());
+		result = prime * result + ((manapp == null) ? 0 : manapp.hashCode());
 		result = prime * result + ((priority == null) ? 0 : priority.hashCode());
 		result = prime * result + ((reimbursement == null) ? 0 : reimbursement.hashCode());
 		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
@@ -250,10 +250,10 @@ public class Request {
 				return false;
 		} else if (!accounts.equals(other.accounts))
 			return false;
-		if (ammountexceeded == null) {
-			if (other.ammountexceeded != null)
+		if (amountexceeded == null) {
+			if (other.amountexceeded != null)
 				return false;
-		} else if (!ammountexceeded.equals(other.ammountexceeded))
+		} else if (!amountexceeded.equals(other.amountexceeded))
 			return false;
 		if (benapp == null) {
 			if (other.benapp != null)
@@ -300,10 +300,10 @@ public class Request {
 				return false;
 		} else if (!inbox.equals(other.inbox))
 			return false;
-		if (msnapp == null) {
-			if (other.msnapp != null)
+		if (manapp == null) {
+			if (other.manapp != null)
 				return false;
-		} else if (!msnapp.equals(other.msnapp))
+		} else if (!manapp.equals(other.manapp))
 			return false;
 		if (priority == null) {
 			if (other.priority != null)
@@ -342,9 +342,9 @@ public class Request {
 	public String toString() {
 		return "Request [id=" + id + ", title=" + title + ", startDate=" + startDate + ", reimbursement="
 				+ reimbursement + ", status=" + status + ", inbox=" + inbox + ", datetimestamp=" + datetimestamp
-				+ ", priority=" + priority + ", ammountexceeded=" + ammountexceeded + ", exceededreason="
+				+ ", priority=" + priority + ", amountexceeded=" + amountexceeded + ", exceededreason="
 				+ exceededreason + ", bencoescalated=" + bencoescalated + ", empapp=" + empapp + ", supapp=" + supapp
-				+ ", msnapp=" + msnapp + ", dhdapp=" + dhdapp + ", benapp=" + benapp + ", denialreason=" + denialreason
+				+ ", manapp=" + manapp + ", dhdapp=" + dhdapp + ", benapp=" + benapp + ", denialreason=" + denialreason
 				+ ", accounts=" + accounts + "]";
 	}
 

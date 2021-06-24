@@ -48,12 +48,12 @@ public class RequestRepository implements RootRepository<Request> {
 					r.setInbox(rs.getInt("inbox"));
 					r.setDatetimestamp(rs.getDate("datetimestamp"));
 					r.setPriority(rs.getString("priority"));
-					r.setAmmountexceeded(rs.getString("ammountexceeded"));
+					r.setAmountexceeded(rs.getString("amountexceeded"));
 					r.setExceededreason(rs.getString("exceededreason"));
 					r.setBencoescalated(rs.getString("bencoescalated"));
 					r.setEmpapp(rs.getString("empapp"));
 					r.setSupapp(rs.getString("supapp"));
-					r.setMsnapp(rs.getString("msnapp"));
+					r.setManapp(rs.getString("manapp"));
 					r.setDhdapp(rs.getString("dhdapp"));
 					r.setBenapp(rs.getString("benapp"));
 					r.setDenialreason(rs.getString("denialreason"));
@@ -92,12 +92,12 @@ public class RequestRepository implements RootRepository<Request> {
 				r.setInbox(rs.getInt("inbox"));
 				r.setDatetimestamp(rs.getDate("datetimestamp"));
 				r.setPriority(rs.getString("priority"));
-				r.setAmmountexceeded(rs.getString("ammountexceeded"));
+				r.setAmountexceeded(rs.getString("amountexceeded"));
 				r.setExceededreason(rs.getString("exceededreason"));
 				r.setBencoescalated(rs.getString("bencoescalated"));
 				r.setEmpapp(rs.getString("empapp"));
 				r.setSupapp(rs.getString("supapp"));
-				r.setMsnapp(rs.getString("msnapp"));
+				r.setManapp(rs.getString("manapp"));
 				r.setDhdapp(rs.getString("dhdapp"));
 				r.setBenapp(rs.getString("benapp"));
 				r.setDenialreason(rs.getString("denialreason"));
@@ -133,12 +133,12 @@ public class RequestRepository implements RootRepository<Request> {
 				r.setInbox(rs.getInt("inbox"));
 				r.setDatetimestamp(rs.getDate("datetimestamp"));
 				r.setPriority(rs.getString("priority"));
-				r.setAmmountexceeded(rs.getString("ammountexceeded"));
+				r.setAmountexceeded(rs.getString("amountexceeded"));
 				r.setExceededreason(rs.getString("exceededreason"));
 				r.setBencoescalated(rs.getString("bencoescalated"));
 				r.setEmpapp(rs.getString("empapp"));
 				r.setSupapp(rs.getString("supapp"));
-				r.setMsnapp(rs.getString("msnapp"));
+				r.setManapp(rs.getString("manapp"));
 				r.setDhdapp(rs.getString("dhdapp"));
 				r.setBenapp(rs.getString("benapp"));
 				r.setDenialreason(rs.getString("denialreason"));
@@ -158,7 +158,7 @@ public class RequestRepository implements RootRepository<Request> {
 	public Request update(Request r) {
 		AppLogger.logger.info("Account table update record request.");
 		String sql = "update \"Project_1\".requests set id = ?, title = ? , startDate = ?, reimbursement = ?, status = ?, inbox = ?,"
-					+ " datetimestamp = ?, priority = ?, ammountexceeded = ?, exceededreason = ?, bencoescalated = ?,"
+					+ " datetimestamp = ?, priority = ?, amountexceeded = ?, exceededreason = ?, bencoescalated = ?,"
 					+ " empapp = ?, supapp = ?, manapp = ?, dhdapp = ?, benapp = ?, denialreason = ?,"
 					+ " accounts = ? where id = ? returning *;";
 		
@@ -172,16 +172,17 @@ public class RequestRepository implements RootRepository<Request> {
 			ps.setInt(6, r.getInbox());
 			ps.setDate(7, r.getDatetimestamp());
 			ps.setString(8, r.getPriority());
-			ps.setString(9, r.getAmmountexceeded());
+			ps.setString(9, r.getAmountexceeded());
 			ps.setString(10, r.getExceededreason());
 			ps.setString(11, r.getBencoescalated());
 			ps.setString(12, r.getEmpapp());
 			ps.setString(13, r.getSupapp());
-			ps.setString(14, r.getMsnapp());
+			ps.setString(14, r.getManapp());
 			ps.setString(15, r.getDhdapp());
 			ps.setString(16, r.getBenapp());
 			ps.setString(17, r.getDenialreason());
 			ps.setInt(18, r.getAccounts());
+			ps.setInt(19, r.getId());
 			
 			boolean success = (ps.execute());
 			
@@ -197,12 +198,12 @@ public class RequestRepository implements RootRepository<Request> {
 					r.setInbox(rs.getInt("inbox"));
 					r.setDatetimestamp(rs.getDate("datetimestamp"));
 					r.setPriority(rs.getString("priority"));
-					r.setAmmountexceeded(rs.getString("ammountexceeded"));
+					r.setAmountexceeded(rs.getString("amountexceeded"));
 					r.setExceededreason(rs.getString("exceededreason"));
 					r.setBencoescalated(rs.getString("bencoescalated"));
 					r.setEmpapp(rs.getString("empapp"));
 					r.setSupapp(rs.getString("supapp"));
-					r.setMsnapp(rs.getString("msnapp"));
+					r.setManapp(rs.getString("manapp"));
 					r.setDhdapp(rs.getString("dhdapp"));
 					r.setBenapp(rs.getString("benapp"));
 					r.setDenialreason(rs.getString("denialreason"));
@@ -259,12 +260,12 @@ public class RequestRepository implements RootRepository<Request> {
 				r.setInbox(rs.getInt("inbox"));
 				r.setDatetimestamp(rs.getDate("datetimestamp"));
 				r.setPriority(rs.getString("priority"));
-				r.setAmmountexceeded(rs.getString("ammountexceeded"));
+				r.setAmountexceeded(rs.getString("amountexceeded"));
 				r.setExceededreason(rs.getString("exceededreason"));
 				r.setBencoescalated(rs.getString("bencoescalated"));
 				r.setEmpapp(rs.getString("empapp"));
 				r.setSupapp(rs.getString("supapp"));
-				r.setMsnapp(rs.getString("msnapp"));
+				r.setManapp(rs.getString("manapp"));
 				r.setDhdapp(rs.getString("dhdapp"));
 				r.setBenapp(rs.getString("benapp"));
 				r.setDenialreason(rs.getString("denialreason"));
@@ -299,19 +300,13 @@ public class RequestRepository implements RootRepository<Request> {
 			sql = "select \"Project_1\".requests.* from \"Project_1\".users"
 					+ " left join \"Project_1\".accounts on \"Project_1\".accounts.users = \"Project_1\".users.id"
 					+ " left join \"Project_1\".requests on \"Project_1\".requests.accounts = \"Project_1\".accounts.id"
-					+ " where (ear = ? and manager = ?);";
+					+ " where (ayear = ? and manager = ?);";
 		}
 		else if ("depthead".equals(u.getUtype())) {
 			sql = "select \"Project_1\".requests.* from \"Project_1\".users"
 					+ " left join \"Project_1\".accounts on \"Project_1\".accounts.users = \"Project_1\".users.id"
 					+ " left join \"Project_1\".requests on \"Project_1\".requests.accounts = \"Project_1\".accounts.id"
-					+ " where (ear = ? and depthead = ?);";
-		}
-		else if (("benco".equals(u.getUtype())) || ("bencosupervisor".equals(u.getUtype()))) {
-			sql = "select \"Project_1\".requests.* from \"Project_1\".users"
-					+ " left join \"Project_1\".accounts on \"Project_1\".accounts.users = \"Project_1\".users.id"
-					+ " left join \"Project_1\".requests on \"Project_1\".requests.accounts = \"Project_1\".accounts.id"
-					+ " where (ayear = ?);";
+					+ " where (ayear = ? and depthead = ?);";
 		}
 		
 		List<Request> requests = new ArrayList<Request>();
@@ -333,12 +328,12 @@ public class RequestRepository implements RootRepository<Request> {
 				r.setInbox(rs.getInt("inbox"));
 				r.setDatetimestamp(rs.getDate("datetimestamp"));
 				r.setPriority(rs.getString("priority"));
-				r.setAmmountexceeded(rs.getString("ammountexceeded"));
+				r.setAmountexceeded(rs.getString("amountexceeded"));
 				r.setExceededreason(rs.getString("exceededreason"));
 				r.setBencoescalated(rs.getString("bencoescalated"));
 				r.setEmpapp(rs.getString("empapp"));
 				r.setSupapp(rs.getString("supapp"));
-				r.setMsnapp(rs.getString("msnapp"));
+				r.setManapp(rs.getString("manapp"));
 				r.setDhdapp(rs.getString("dhdapp"));
 				r.setBenapp(rs.getString("benapp"));
 				r.setDenialreason(rs.getString("denialreason"));
@@ -380,12 +375,12 @@ public class RequestRepository implements RootRepository<Request> {
 				r.setInbox(rs.getInt("inbox"));
 				r.setDatetimestamp(rs.getDate("datetimestamp"));
 				r.setPriority(rs.getString("priority"));
-				r.setAmmountexceeded(rs.getString("ammountexceeded"));
+				r.setAmountexceeded(rs.getString("amountexceeded"));
 				r.setExceededreason(rs.getString("exceededreason"));
 				r.setBencoescalated(rs.getString("bencoescalated"));
 				r.setEmpapp(rs.getString("empapp"));
 				r.setSupapp(rs.getString("supapp"));
-				r.setMsnapp(rs.getString("msnapp"));
+				r.setManapp(rs.getString("manapp"));
 				r.setDhdapp(rs.getString("dhdapp"));
 				r.setBenapp(rs.getString("benapp"));
 				r.setDenialreason(rs.getString("denialreason"));

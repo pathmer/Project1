@@ -1,6 +1,7 @@
 let url = "";
 var d = new Date();
 var currentyear = d.getFullYear();
+var activeuser = {};
 
 
 function newrequestpage() {
@@ -65,6 +66,7 @@ function changeyear() {
     }
     sendrequest(xhttpchangeyear, url, "POST", accountfunc, accountsend);
 
+    getactiveuser();
     setTimeout(function(){
         getusershortrequests();
     },100);
@@ -119,11 +121,23 @@ function getusershortrequests() {
                 tr.appendChild(tdReimbursement);
 
                 let tdStatus = document.createElement('td');
-                tdStatus.innerHTML = request.status;
+                if ((activeuser.id == request.inbox) && (request.status == 'pending')) {
+                    tdStatus.innerHTML = "Action Needed";
+                }
+                else {
+                    tdStatus.innerHTML = request.status;
+                }
                 tr.appendChild(tdStatus);
 
                 let tdPriority = document.createElement('td');
-                tdPriority.innerHTML = request.priority;
+                var date1 = new Date(request.startDate);
+                var ans = (date1.getTime() - d.getTime()) / (1000 * 3600 * 24);
+                if (ans < 14) {
+                    tdPriority.innerHTML = 'URGENT';
+                }
+                else {
+                    tdPriority.innerHTML = request.priority;
+                }
                 tr.appendChild(tdPriority);
 
                 userrequestsTable.appendChild(tr);
@@ -164,14 +178,16 @@ function getothershortrequests() {
         if (otherrequests != null) {
             for (let request of otherrequests) {
                 let tr = document.createElement('tr');
-                tr.setAttribute('onclick', 'editrequest()');
+                tr.value = request.id;
+                tr.setAttribute('onclick', 'editrequest(this.value)');
 
                 let tdTitle = document.createElement('td');
                 tdTitle.innerHTML = request.title;
                 tr.appendChild(tdTitle);
 
                 let tdStart = document.createElement('td');
-                tdStart.innerHTML = request.startDate;
+                var date = new Date(request.startDate);
+                tdStart.innerHTML = date.toDateString();
                 tr.appendChild(tdStart);
                 
                 let tdReimbursement = document.createElement('td');
@@ -179,11 +195,23 @@ function getothershortrequests() {
                 tr.appendChild(tdReimbursement);
 
                 let tdStatus = document.createElement('td');
-                tdStatus.innerHTML = request.status;
+                if ((activeuser.id == request.inbox) && (request.status == 'pending')){
+                    tdStatus.innerHTML = "Action Needed";
+                }
+                else {
+                    tdStatus.innerHTML = request.status;
+                }
                 tr.appendChild(tdStatus);
 
                 let tdPriority = document.createElement('td');
-                tdPriority.innerHTML = request.priority;
+                var date1 = new Date(request.startDate);
+                var ans = (date1.getTime() - d.getTime()) / (1000 * 3600 * 24);
+                if (ans < 14) {
+                    tdPriority.innerHTML = 'URGENT';
+                }
+                else {
+                    tdPriority.innerHTML = request.priority;
+                }
                 tr.appendChild(tdPriority);
 
                 otherrequestsTable.appendChild(tr);
@@ -194,9 +222,20 @@ function getothershortrequests() {
     sendrequest(xhttpgetothershortrequests, url, "GET", otherrequestsfunc, otherrequestsend);
 }
 
+function getactiveuser() {
+    url = 'http://localhost:8080/Project1/site/getactiveuser';
+    let xhttpgetactiveuser = new XMLHttpRequest();
+    let getactiveusersend = JSON.stringify(null)
+    function getactiveuserfunc() {
+        let r = xhttpgetactiveuser.responseText;
+        activeuser = JSON.parse(r);
+    }
+    sendrequest(xhttpgetactiveuser, url, "GET", getactiveuserfunc, getactiveusersend)
+    
+}
+
 function sendrequest(xhttp, url, GETPOST, funcstuff, send) {
     // AJAX Call
-    //console.log(url, GETPOST, funcstuff, send);
     xhttp.onreadystatechange = sendrequestfunc;
     xhttp.open(GETPOST, url, true);
     xhttp.setRequestHeader('Content-Type', 'application/json');

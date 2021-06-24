@@ -29,19 +29,50 @@ function refreshrequestpage() {
 }
 
 function submitrequest(){
-    newrequest();
-    setTimeout(function(){
-        newformdata();
-    },100);
-    setTimeout(function(){
-        newattachments();
-    },100);
-    setTimeout(function(){
-        updateformdata();
-    },100);
-    setTimeout(function(){
-        window.location = "/Project1/html/HomePage.html"
-    },100);
+    if (document.getElementById('title').value == false) {
+        return;
+    }
+    else if (document.getElementById('startDate').value == false) {
+        return;
+    }
+    else if (document.getElementById('times').value == false) {
+        return;
+    }
+    else if (document.getElementById('locations').value == false) {
+        return;
+    }
+    else if (document.getElementById('description').value == false) {
+        return;
+    }
+    else if (document.getElementById('costs').value == false) {
+        return;
+    }
+    else if (document.getElementById('gradeFormat').value == false) {
+        return;
+    }
+    else if (document.getElementById('eventType').value == false) {
+        return;
+    }
+    else if (document.getElementById('justification').value == false) {
+        return;
+    }
+    var date1 = new Date(document.getElementById('startDate').value);
+    var ans = (date1.getTime() - d.getTime()) / (1000 * 3600 * 24);
+    if (ans < 7) {
+        return;
+    }
+    else {
+        newrequest();
+        setTimeout(function(){
+            newformdata();
+        },400);
+        setTimeout(function(){
+            newattachments();
+        },500);
+        setTimeout(function(){
+            window.location = "/Project1/html/HomePage.html"
+        },600);
+    }
 }
 
 
@@ -60,7 +91,6 @@ function newrequest() {
         reimbursement : rreimbursement
     }
 
-    console.log(request);
     // AJAX Call
     let xhttpnewrequest = new XMLHttpRequest();
     let newrequestsend = JSON.stringify(request)
@@ -110,7 +140,6 @@ function newattachments () {
 
     let rrequests = returnrequest.id;
 
-
     let attachments = {
         requests : rrequests
     }
@@ -124,22 +153,12 @@ function newattachments () {
     sendrequest(xhttpnewattachments, url, "POST", newattachmentsfunc, newattachmentssend)
 }
 
-function updateformdata () {
-    let url = 'http://localhost:8080/Project1/site/updateFormdata';
-
-    let formdata2 = {
-        
-    }
-
-}
-
 function cancel() {
     window.location = "/Project1/html/HomePage.html"
 }
 
 function sendrequest(xhttp, url, GETPOST, funcstuff, send) {
     // AJAX Call
-    //console.log(url, GETPOST, funcstuff, send);
     xhttp.onreadystatechange = sendrequestfunc;
     xhttp.open(GETPOST, url, true);
     xhttp.setRequestHeader('Content-Type', 'application/json');
@@ -182,3 +201,4 @@ function updatereimbursement() {
     }
     document.getElementById('estreimbursement').innerHTML = estreimbursement;
 }
+

@@ -38,6 +38,8 @@ public class FrontControllerServlet extends HttpServlet {
 	private Request selectedrequest;
 	private FormData selectedformdata;
 	private Attachments selectedattachments;
+	private Account selectedaccount;
+	private User selecteduser;
 	
 	
 	@Override
@@ -48,7 +50,6 @@ public class FrontControllerServlet extends HttpServlet {
 		
 		case "/Project1/site/logout": {
 			if ("GET".equals(request.getMethod())) {
-				System.out.println("Logging out....");
 				session.invalidate();
 				response.setHeader("Content-Type", "application/json");
 				response.getWriter().append(gson.toJson("loggedout"));
@@ -64,7 +65,6 @@ public class FrontControllerServlet extends HttpServlet {
 		
 		case "/Project1/site/getusershortrequests": {
 			if ("GET".equals(request.getMethod())) {
-				System.out.println("Checking user requests info....");
 				if (account != null) {
 					usershortrequests = es.getUserRequestShortListByAccount(account);
 				}
@@ -84,7 +84,6 @@ public class FrontControllerServlet extends HttpServlet {
 		}
 		case "/Project1/site/getothershortrequests": {
 			if ("GET".equals(request.getMethod())) {
-				System.out.println("Checking other requests info....");
 				if ("employee".equals(activeuser.getUtype())) {
 					othershortrequests = null;
 				}
@@ -105,7 +104,6 @@ public class FrontControllerServlet extends HttpServlet {
 		
 		case "/Project1/site/getuserformdata": {
 			if ("GET".equals(request.getMethod())) {
-				System.out.println("Checking user formdata info....");
 				List<FormData> formdata = es.getUserFormData(account);
 				response.setHeader("Content-Type", "application/json");
 				response.getWriter().append(gson.toJson(formdata));
@@ -121,7 +119,6 @@ public class FrontControllerServlet extends HttpServlet {
 		
 		case "/Project1/site/getselectedrequest": {
 			if ("GET".equals(request.getMethod())) {
-				System.out.println("Getting active request ....");
 				response.setHeader("Content-Type", "application/json");
 				response.getWriter().append(gson.toJson(selectedrequest));
 				break;
@@ -136,7 +133,6 @@ public class FrontControllerServlet extends HttpServlet {
 		
 		case "/Project1/site/getselectedformdata": {
 			if ("GET".equals(request.getMethod())) {
-				System.out.println("Getting active formdata ....");
 				response.setHeader("Content-Type", "application/json");
 				response.getWriter().append(gson.toJson(selectedformdata));
 				break;
@@ -151,9 +147,50 @@ public class FrontControllerServlet extends HttpServlet {
 		
 		case "/Project1/site/getselectedattachments": {
 			if ("GET".equals(request.getMethod())) {
-				System.out.println("Getting active attachments ....");
 				response.setHeader("Content-Type", "application/json");
 				response.getWriter().append(gson.toJson(selectedattachments));
+				break;
+			}
+			else {
+				System.out.println("Hitting the servlet else statement...");
+				response.setHeader("Access-Control-Allow-Origin","*");
+				response.getWriter().append("Hitting the servlet else statement...");
+				break;
+			}
+		}
+		
+		case "/Project1/site/getselectedaccount": {
+			if ("GET".equals(request.getMethod())) {
+				response.setHeader("Content-Type", "application/json");
+				response.getWriter().append(gson.toJson(selectedaccount));
+				break;
+			}
+			else {
+				System.out.println("Hitting the servlet else statement...");
+				response.setHeader("Access-Control-Allow-Origin","*");
+				response.getWriter().append("Hitting the servlet else statement...");
+				break;
+			}
+		}
+		
+		case "/Project1/site/getselecteduser": {
+			if ("GET".equals(request.getMethod())) {
+				response.setHeader("Content-Type", "application/json");
+				response.getWriter().append(gson.toJson(selecteduser));
+				break;
+			}
+			else {
+				System.out.println("Hitting the servlet else statement...");
+				response.setHeader("Access-Control-Allow-Origin","*");
+				response.getWriter().append("Hitting the servlet else statement...");
+				break;
+			}
+		}
+		
+		case "/Project1/site/getactiveuser": {
+			if ("GET".equals(request.getMethod())) {
+				response.setHeader("Content-Type", "application/json");
+				response.getWriter().append(gson.toJson(activeuser));
 				break;
 			}
 			else {
@@ -182,7 +219,6 @@ public class FrontControllerServlet extends HttpServlet {
 		case "/Project1/site/login": {
 			
 			if ("POST".equals(request.getMethod())) {
-				System.out.println("Checking login info....");
 				session = request.getSession();
 				//System.out.println(session);
 				ls = new LoginServices();
@@ -216,7 +252,6 @@ public class FrontControllerServlet extends HttpServlet {
 		
 		case "/Project1/site/getaccount": {
 			if ("POST".equals(request.getMethod())) {
-				System.out.println("Checking account info....");
 				year = gson.fromJson(request.getReader(), Integer.class);
 				account = es.getAccount(activeuser, year);
 				response.setHeader("Content-Type", "application/json");
@@ -270,7 +305,6 @@ public class FrontControllerServlet extends HttpServlet {
 			if ("POST".equals(request.getMethod())) {
 				System.out.println("Adding new attachments ....");
 				Attachments newattachments = gson.fromJson(request.getReader(), Attachments.class);
-				System.out.println(newattachments);
 				es.addAttachments(newattachments);
 				response.setHeader("Content-Type", "application/json");
 				response.getWriter().append(gson.toJson("Success attachments"));
@@ -286,13 +320,48 @@ public class FrontControllerServlet extends HttpServlet {
 		
 		case "/Project1/site/setselectedrequest": {
 			if ("POST".equals(request.getMethod())) {
-				System.out.println("Setting active request ....");
 				Request newselectedrequest = gson.fromJson(request.getReader(), Request.class);
-				selectedrequest = es.getRequest(newselectedrequest);
-				selectedformdata = es.getFormData(newselectedrequest);
-				selectedattachments = es.getAttachments(newselectedrequest);
+				selectedrequest = es.getRequest(newselectedrequest.getId());
+				selectedformdata = es.getFormData(newselectedrequest.getId());
+				selectedattachments = es.getAttachments(newselectedrequest.getId());
+				selectedaccount = es.getSelectedAccount(selectedrequest.getAccounts());	
+				selecteduser = es.getSelectedUSer(selectedaccount.getUsers());
 				response.setHeader("Content-Type", "application/json");
 				response.getWriter().append(gson.toJson("Success activerequest"));
+				break;
+			}
+			else {
+				System.out.println("Hitting the servlet else statement...");
+				response.setHeader("Access-Control-Allow-Origin","*");
+				response.getWriter().append("Hitting the servlet else statement...");
+				break;
+			}
+		}
+		
+		case "/Project1/site/updaterequest": {
+			if ("POST".equals(request.getMethod())) {
+				System.out.println("Updating request ....");
+				Request newselectedrequest = gson.fromJson(request.getReader(), Request.class);
+				selectedrequest = es.updateRequest(newselectedrequest);
+				response.setHeader("Content-Type", "application/json");
+				response.getWriter().append(gson.toJson("Success activerequest"));
+				break;
+			}
+			else {
+				System.out.println("Hitting the servlet else statement...");
+				response.setHeader("Access-Control-Allow-Origin","*");
+				response.getWriter().append("Hitting the servlet else statement...");
+				break;
+			}
+		}
+		
+		case "/Project1/site/updateaccount": {
+			if ("POST".equals(request.getMethod())) {
+				System.out.println("Updating account ....");
+				Account newselectedaccount = gson.fromJson(request.getReader(), Account.class);
+				selectedaccount = es.updateAccount(newselectedaccount);
+				response.setHeader("Content-Type", "application/json");
+				response.getWriter().append(gson.toJson(selectedaccount));
 				break;
 			}
 			else {

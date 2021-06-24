@@ -13,6 +13,13 @@
     <button id='return' type='button' onclick='cancel()'>Return to Homepage</button>
     <br>
     <br>
+    <div id="accountdata">
+        <label for='accountdata'>Account Details</label>
+        <table class='table table-dark table-striped'>
+        </table>
+    </div>
+    <br>
+    <br>
     <div id="requestFormData">
         <label for='requestFormData'>Request Details</label>
         <table class='table table-dark table-striped'>
@@ -21,11 +28,19 @@
     <br>
     <br>
     <div id="requestprocessing">
-        <label for='otherRequestsSection'>Request Processing</label>
+        <label for='requestprocessing'>Request Processing</label>
         <table class='table table-dark table-striped'>
         </table>
     </div>
-
+    <br>
+    <br>
+    <div id="bigboxdata">
+        <label for='bigboxdata'>Other Information</label>
+        <table class='table table-dark table-striped'>
+        </table>
+    </div>
+    <br>
+    <br>
 
 
 
@@ -34,22 +49,23 @@
 
     <br>
     <br>
-    <button id='approve' type='button' onclick='cancel()'>Approve</button>
-    <button id='deny' type='button' onclick='cancel()'>Deny Request</button>
+    <button id='approve' type='button' onclick='approverequest("Yes")'>Approve</button>
+    <button id='deny' type='button' onclick='approverequest("No")'>Deny Request</button>
     <label for='denyreason'>Reason for denial:</label>
     <input id='denyreason'type='text' placeholder="Must enter a reason for denial to process.">
     <br>
     <br>
-    <button id='amount' type='button' onclick='cancel()'>Change Amount</button>
-    <label for='ammountchange'>New Reimbursement Amount $:</label>
-    <input id='ammountchange'type='number' placeholder="0.00">
+    <button id='amount' type='button' onclick='changeamount()'>Change Amount</button>
+    <label for='amountchange'>New Reimbursement Amount $:</label>
+    <input id='amountchange'type='number' value=0.00>
+    <input id='exceededreason'type='text' placeholder="Reason for exceeding balance">
     <br>
     <br>
-    <button id='requestinfo' type='button' onclick='cancel()'>Request Information</button>
-    <button id='addattachments' type='button' onclick='addattachments()'>Add Attachments</button>
+    <button id='requestinfo' type='button' onclick='null'>Request Information</button>
+    <button id='addattachments' type='button' onclick='null'>Add Attachments</button>
     <br>
     <br>
-    <button id='complete' type='button' onclick='cancel()'>Complete Reimbursement</button>
+    <button id='complete' type='button' onclick='complete()'>Complete Reimbursement</button>
     <br>
     <br>
 
