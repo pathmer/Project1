@@ -246,7 +246,8 @@ function buildrequestformtable() {
     tr.appendChild(tdayear);
     
     let tdstartDate = document.createElement('td');
-    tdstartDate.innerHTML = selectedrequest.startDate;
+    var date = new Date(selectedrequest.startDate);
+    tdstartDate.innerHTML = date.toDateString();
     tr.appendChild(tdstartDate);
 
     let tdfirstname = document.createElement('td');
@@ -333,7 +334,8 @@ function buildrequestprocessingtable() {
     tr.appendChild(tdreimbursement);
 
     let tddatetimestamp = document.createElement('td');
-    tddatetimestamp.innerHTML = selectedrequest.datetimestamp;
+    var date = new Date(selectedrequest.datetimestamp);
+    tddatetimestamp.innerHTML = date.toDateString();
     tr.appendChild(tddatetimestamp);
 
     let tdempapp = document.createElement('td');

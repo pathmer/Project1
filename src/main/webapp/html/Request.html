@@ -5,12 +5,71 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New TRMS Request</title>
+    <style>
+        body {  
+            background-color:lightblue
+        }
+        h1 {  
+            text-align: center; 
+            font-size: 28px; 
+            width: 100%;
+        }
+        div {
+            margin: auto;
+            text-align: center; 
+            font-size: 28px; 
+            width: 80%;
+        }
+        table {
+            margin: auto;
+            border: 10px solid black;
+            text-align: center;  
+            font-size: 24px;
+            width: 80%;
+        }
+        label {
+            float: left;
+            text-align: left; 
+            font-size: 20px;
+        }
+        th {
+            border: 5px solid black;
+            text-align: center; 
+            font-size: 22px; 
+
+        }
+        td {
+            border: 2px solid black;
+            text-align: center; 
+            font-size: 22px; 
+
+        }
+        button {  
+            text-align: center; 
+            font-size: 16px; 
+
+        }
+        input {
+            float: right;
+            text-align: left; 
+            font-size: 20px;
+            width: 60%;
+        }
+        select {
+            float: right;
+            text-align: left; 
+            font-size: 20px;
+            width: 60%;
+        }
+        </style>  
 </head>
 <body onload = 'refreshrequestpage()'>
-    <label for='logintitle'>New TRMS Request</label>
+    <h1 for='logintitle'>New TRMS Request</h1>
     <br>
-    <button id='submit' type='button' onclick='submitrequest()'>Submit</button>
-    <button id='cancel' type='button' onclick='cancel()'>Cancel</button>
+    <div id='buttons' class='container'>
+        <button id='submit' type='button' onclick='submitrequest()'>Submit</button>
+        <button id='cancel' type='button' onclick='cancel()'>Cancel</button>
+    </div>
     <br>
     <div id='catInfo' class='container'>
         <form>
@@ -61,6 +120,8 @@
                 <br>
                 <label for='estreimbursement'>Estimated Reimbursement $:</label>
                 <label id='estreimbursement'>0.0</label>
+                <br>
+                <br>
                 <br>
             </div>
         </form>

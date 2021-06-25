@@ -113,7 +113,8 @@ function getusershortrequests() {
                 tr.appendChild(tdTitle);
 
                 let tdStart = document.createElement('td');
-                tdStart.innerHTML = request.startDate;
+                var date = new Date(request.startDate);
+                tdStart.innerHTML = date.toDateString();
                 tr.appendChild(tdStart);
                 
                 let tdReimbursement = document.createElement('td');
@@ -167,7 +168,7 @@ function getothershortrequests() {
 
         // Create table header row
         let thRow = document.createElement('tr');
-        let tHeaders = ['Title', 'Start Date', 'Reimbursement', 'Status', 'Priority'];
+        let tHeaders = ['Title', 'Start Date', 'Reimbursement $', 'Status', 'Priority'];
         for (let h of tHeaders) {
             let th = document.createElement('th');
             th.innerHTML = h;

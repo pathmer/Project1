@@ -5,11 +5,56 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tuition Reimbursement Management System</title>
+    <style>
+        body {  
+            background-color:lightblue
+        }
+        h1 {  
+            text-align: center; 
+            font-size: 28px; 
+            width: 100%;
+        }
+        div {  
+            text-align: center; 
+            font-size: 28px; 
+            width: 100%;
+        }
+        table {
+            margin: auto;
+            border: 10px solid black;
+            text-align: center;  
+            font-size: 24px;
+            width: 80%;
+        }
+        label {
+            text-align: center; 
+            font-size: 20px; 
+            width: 80%;
+        }
+        th {
+            border: 5px solid black;
+            text-align: center; 
+            font-size: 22px; 
+
+        }
+        td {
+            border: 2px solid black;
+            text-align: center; 
+            font-size: 22px; 
+
+        }
+        button {
+            text-align: center; 
+            font-size: 16px; 
+
+        }
+        </style> 
 </head>
 <body>
-    <label for='logintitle'>Tuition Reimbursement Management System</label>
+    <h1 for='logintitle'>Tuition Reimbursement Management System</h1>
     <br>
     <div class="container">
+        <label id='loginstatus'>Please log in</label>
         <br>
         <label for='userName'>User Name:</label>
         <input id='userName'type='text' placeholder="User name">
@@ -21,7 +66,6 @@
         <br>
     </div>
     <br>
-    <label id='loginstatus'>Please log in</label>
     <script src='../scripts/Login.js'></script>
 </body>
 </html>
