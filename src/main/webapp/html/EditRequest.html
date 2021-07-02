@@ -85,12 +85,6 @@
     </div>
     <br>
     <br>
-
-
-
-
-
-
     <br>
     <br>
     <button id='approve' type='button' onclick='approverequest("Yes")'>Approve</button>
@@ -99,10 +93,12 @@
     <input id='denyreason'type='text' placeholder="Must enter a reason for denial to process.">
     <br>
     <br>
-    <button id='amount' type='button' onclick='changeamount()'>Change Amount</button>
-    <label for='amountchange'>New Reimbursement Amount $:</label>
-    <input id='amountchange'type='number' value=0.00>
-    <input id='exceededreason'type='text' placeholder="Reason for exceeding balance">
+    <div id="bencobuttons">
+        <button id='amount' type='button' onclick='changeamount()'>Change Amount</button>
+        <label for='amountchange'>New Reimbursement Amount $:</label>
+        <input id='amountchange' type='number' value=0.00>
+        <input id='exceededreason' type='text' placeholder="Reason for exceeding balance">
+    </div>
     <br>
     <br>
     <button id='requestinfo' type='button' onclick='null'>Request Information</button>
@@ -112,13 +108,6 @@
     <button id='complete' type='button' onclick='complete()'>Complete Reimbursement</button>
     <br>
     <br>
-
-
-
-
-
-
-
     <br>
     <br>
     <script src='../scripts/EditRequest.js'></script>

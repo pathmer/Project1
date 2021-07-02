@@ -7,66 +7,29 @@ var selecteduser = {};
 var d = new Date();
 
 function refresheditrequestpage() {
+
     getselectedrequest();
 
-    setTimeout(function(){
+    getselectedformdata();
 
-        buildrequestformtable();
+    getselectedattachments();
 
-        buildrequestprocessingtable();
+    getselectedaccount();
 
-        buildaccounttable();
+    getselecteduser();
 
-        buildbigboxtable();
+    getactiveuser();
 
-    },300);
-    setTimeout(function(){
-        if (activeuser.id != selectedrequest.inbox) {
-            document.getElementById("approve").disabled = true;
-            document.getElementById("deny").disabled = true;
-            document.getElementById("denyreason").disabled = true;
-        }
-        if (('employee' == activeuser.utype) || ('supervisor' == activeuser.utype) || ('manager' == activeuser.utype) || ('depthead' == activeuser.utype)) {
-            document.getElementById("amount").disabled = true;
-            document.getElementById("amountchange").disabled = true;
-            document.getElementById("exceededreason").disabled = true;
-            document.getElementById("complete").disabled = true;
-        }
-        if (('depthead' == selecteduser.utype) && ('Yes' != selectedrequest.dhdapp)) {
-            document.getElementById("complete").disabled = true;
-        }
-        if (('employee' == selecteduser.utype) || ('supervisor' == selecteduser.utype) || ('manager' == selecteduser.utype)) {
-            if ('Yes' != selectedrequest.manapp) {
-                document.getElementById("complete").disabled = true;
-            }
-        }
-        if (('benco' == activeuser.utype) && ('benco' == selecteduser.utype)) {
-            document.getElementById("approve").disabled = true;
-            document.getElementById("deny").disabled = true;
-            document.getElementById("denyreason").disabled = true;
-        }
-        if (('bencosupervisor' == activeuser.utype) && ('bencosupervisor' == selecteduser.utype)) {
-            document.getElementById("approve").disabled = true;
-            document.getElementById("deny").disabled = true;
-            document.getElementById("denyreason").disabled = true;
-        }
-        if (selectedrequest.status == 'Denied') {
-            document.getElementById("amount").disabled = true;
-            document.getElementById("amountchange").disabled = true;
-            document.getElementById("exceededreason").disabled = true;
-        }
-        if (selectedrequest.status == 'Completed') {
-            document.getElementById("amount").disabled = true;
-            document.getElementById("amountchange").disabled = true;
-            document.getElementById("exceededreason").disabled = true;
-            document.getElementById("approve").disabled = true;
-            document.getElementById("deny").disabled = true;
-            document.getElementById("denyreason").disabled = true;
-            document.getElementById("complete").disabled = true;
-            document.getElementById("requestinfo").disabled = true;
-            document.getElementById("addattachments").disabled = true;
-        }
-    },300);
+    buildrequestformtable();
+
+    buildrequestprocessingtable();
+
+    buildaccounttable();
+
+    buildbigboxtable();
+
+    disablebuttons();
+
 }
 
 function getselectedrequest() {
@@ -78,22 +41,6 @@ function getselectedrequest() {
         selectedrequest = JSON.parse(r);
     }
     sendrequest(xhttpgetselectedrequest, url, "GET", getselectedrequestfunc, getselectedrequestsend);
-
-    setTimeout(function(){
-        getselectedformdata();
-    },100);
-    setTimeout(function(){
-        getselectedattachments();
-    },100);
-    setTimeout(function(){
-        getselectedaccount();
-    },100);
-    setTimeout(function(){
-        getselecteduser();
-    },200);
-    setTimeout(function(){
-        getactiveuser();
-    },200);
 }
 
 function getselectedformdata() {
@@ -158,21 +105,6 @@ function cancel() {
 
 function addattachments() {
     //window.location = "/Project1/html/AddAttachments.html"
-}
-
-function sendrequest(xhttp, url, GETPOST, funcstuff, send) {
-    // AJAX Call
-    xhttp.onreadystatechange = sendrequestfunc;
-    xhttp.open(GETPOST, url, true);
-    xhttp.setRequestHeader('Content-Type', 'application/json');
-    xhttp.send(send);
-    function sendrequestfunc() {
-        if (xhttp.readyState == 4) {
-            if (xhttp.status == 200) {
-                funcstuff();
-            }
-        }
-    }
 }
 
 function buildaccounttable() {
@@ -426,7 +358,6 @@ function buildbigboxtable() {
     tr.appendChild(tdjustification);
 
     let tdamountexceeded = document.createElement('td');
-    console.log(selectedrequest.amountexceeded)
     tdamountexceeded.innerHTML = selectedrequest.amountexceeded;
     tr.appendChild(tdamountexceeded);
 
@@ -466,12 +397,12 @@ function approverequest(appden) {
     }
     if ('employee' == activeuser.utype) {
         selectedrequest.empapp = appden;
-        selectedrequest.inbox = 5;
+        selectedrequest.inbox = activeuser.manager;
     }
     else if ('supervisor' == activeuser.utype) {
         selectedrequest.supapp = appden;
         if (selecteduser.id == activeuser.id) {
-            selectedrequest.inbox = 5;
+            selectedrequest.inbox = activeuser.manager;
         }
         else {
             selectedrequest.inbox = activeuser.depthead;
@@ -479,12 +410,7 @@ function approverequest(appden) {
     }
     else if ('manager' == activeuser.utype) {
         selectedrequest.manapp = appden;
-        if (selecteduser.id == activeuser.id) {
-            selectedrequest.inbox = 5;
-        }
-        else {
-            selectedrequest.inbox = activeuser.depthead;
-        }
+        selectedrequest.inbox = 5;
     }
     else if ('depthead' == activeuser.utype) {
         selectedrequest.dhdapp = appden;
@@ -509,7 +435,6 @@ function approverequest(appden) {
         else {
             selectedaccount.balance = b
         }
-
         url = 'http://localhost:8080/Project1/site/updateaccount';
         let xhttupdateaccount = new XMLHttpRequest();
         let uupdateaccountsend = JSON.stringify(selectedaccount);
@@ -518,9 +443,7 @@ function approverequest(appden) {
             selectedaccount = JSON.parse(r);
         }
         sendrequest(xhttupdateaccount, url, "POST", updateaccountfunc, uupdateaccountsend);
-
     }
-
     url = 'http://localhost:8080/Project1/site/updaterequest';
     let xhttpupdaterequest = new XMLHttpRequest();
     let updaterequestsend = JSON.stringify(selectedrequest);
@@ -529,9 +452,9 @@ function approverequest(appden) {
         selectedrequest = JSON.parse(r);
     }
     sendrequest(xhttpupdaterequest, url, "POST", updaterequestfunc, updaterequestsend);
-    setTimeout(function(){
-        refresheditrequestpage();
-    },200);
+
+    refresheditrequestpage();
+
 }
 
 function complete() {
@@ -547,20 +470,18 @@ function complete() {
         selectedaccount = JSON.parse(r);
     }
     sendrequest(xhttupdateaccount2, url, "POST", updateaccountfunc2, uupdateaccountsend2);
-    
-    setTimeout(function(){
-        url = 'http://localhost:8080/Project1/site/updaterequest';
-        let xhttpupdaterequest2 = new XMLHttpRequest();
-        let updaterequestsend2 = JSON.stringify(selectedrequest);
-        function updaterequestfunc2() {
-            let r = xhttpupdaterequest2.responseText;
-            selectedrequest2 = JSON.parse(r);
-        }
-        sendrequest(xhttpupdaterequest2, url, "POST", updaterequestfunc2, updaterequestsend2);
-    },100);
-    setTimeout(function(){
-        refresheditrequestpage();
-    },200);
+
+    url = 'http://localhost:8080/Project1/site/updaterequest';
+    let xhttpupdaterequest2 = new XMLHttpRequest();
+    let updaterequestsend2 = JSON.stringify(selectedrequest);
+    function updaterequestfunc2() {
+        let r = xhttpupdaterequest2.responseText;
+        selectedrequest2 = JSON.parse(r);
+    }
+    sendrequest(xhttpupdaterequest2, url, "POST", updaterequestfunc2, updaterequestsend2);
+
+    refresheditrequestpage();
+
 }
 
 function changeamount() {
@@ -591,18 +512,75 @@ function changeamount() {
         selectedaccount = JSON.parse(r);
     }
     sendrequest(xhttupdateaccount2, url, "POST", updateaccountfunc2, uupdateaccountsend2);
-    
-    setTimeout(function(){
-        url = 'http://localhost:8080/Project1/site/updaterequest';
-        let xhttpupdaterequest2 = new XMLHttpRequest();
-        let updaterequestsend2 = JSON.stringify(selectedrequest);
-        function updaterequestfunc2() {
-            let r = xhttpupdaterequest2.responseText;
-            selectedrequest2 = JSON.parse(r);
+
+    url = 'http://localhost:8080/Project1/site/updaterequest';
+    let xhttpupdaterequest2 = new XMLHttpRequest();
+    let updaterequestsend2 = JSON.stringify(selectedrequest);
+    function updaterequestfunc2() {
+        let r = xhttpupdaterequest2.responseText;
+        selectedrequest2 = JSON.parse(r);
+    }
+    sendrequest(xhttpupdaterequest2, url, "POST", updaterequestfunc2, updaterequestsend2);
+
+    refresheditrequestpage();
+}
+
+function disablebuttons() {
+    if (activeuser.id != selectedrequest.inbox) {
+        document.getElementById("approve").disabled = true;
+        document.getElementById("deny").disabled = true;
+        document.getElementById("denyreason").disabled = true;
+    }
+    if (('depthead' == selecteduser.utype) && ('Yes' != selectedrequest.dhdapp)) {
+        document.getElementById("complete").disabled = true;
+    }
+    if (('employee' == selecteduser.utype) || ('supervisor' == selecteduser.utype) || ('manager' == selecteduser.utype)) {
+        if ('Yes' != selectedrequest.manapp) {
+            document.getElementById("complete").disabled = true;
         }
-        sendrequest(xhttpupdaterequest2, url, "POST", updaterequestfunc2, updaterequestsend2);
-    },100);
-    setTimeout(function(){
-        refresheditrequestpage();
-    },200);
+    }
+    if ((('benco' == activeuser.utype) || ('bencosupervisor' == activeuser.utype)) && (('benco' == selecteduser.utype) || ('bencosupervisor' == selecteduser.utype))) {
+        document.getElementById("approve").disabled = true;
+        document.getElementById("deny").disabled = true;
+        document.getElementById("denyreason").disabled = true;
+    }
+    if ('Yes' == selectedrequest.benapp) {
+        document.getElementById("amount").disabled = true;
+        document.getElementById("amountchange").disabled = true;
+        document.getElementById("exceededreason").disabled = true;
+    }
+    if (('benco' == activeuser.utype) && ('Yes' == selectedrequest.benapp)) {
+        document.getElementById("approve").disabled = true;
+    }
+    if ((selectedrequest.status == 'Completed') || (selectedrequest.status == 'Denied')) {
+        document.getElementById("amount").disabled = true;
+        document.getElementById("amountchange").disabled = true;
+        document.getElementById("exceededreason").disabled = true;
+        document.getElementById("approve").disabled = true;
+        document.getElementById("deny").disabled = true;
+        document.getElementById("denyreason").disabled = true;
+        document.getElementById("complete").disabled = true;
+        document.getElementById("requestinfo").disabled = true;
+        document.getElementById("addattachments").disabled = true;
+    }
+    if (('employee' == activeuser.utype) || ('supervisor' == activeuser.utype) || ('manager' == activeuser.utype) || ('depthead' == activeuser.utype)) {
+        document.getElementById("bencobuttons").style.display = "none";
+        document.getElementById("complete").style.display = "none";
+        // add accounts button disabled
+    }
+}
+
+function sendrequest(xhttp, url, GETPOST, funcstuff, send) {
+    // AJAX Call
+    xhttp.onreadystatechange = sendrequestfunc;
+    xhttp.open(GETPOST, url, false);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(send);
+    function sendrequestfunc() {
+        if (xhttp.readyState == 4) {
+            if (xhttp.status == 200) {
+                funcstuff();
+            }
+        }
+    }
 }

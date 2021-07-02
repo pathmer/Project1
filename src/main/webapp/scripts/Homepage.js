@@ -31,7 +31,6 @@ function editrequest(thisrequestid) {
     }
     let setactiverequestsend = JSON.stringify(requestid);
     function setactiverequestfunc() {
-        console.log("success");
     }
     sendrequest(xhttpsetactiverequest, url, "POST", setactiverequestfunc, setactiverequestsend);
 
@@ -42,6 +41,9 @@ function refreshhomepage() {
     // Update account info
     year.value = currentyear;
     changeyear();
+    if ('employee' == activeuser.utype) {
+        document.getElementById("otherRequestsSection").style.display = "none";
+    }
 }
 
 function changeyear() {
@@ -67,12 +69,11 @@ function changeyear() {
     sendrequest(xhttpchangeyear, url, "POST", accountfunc, accountsend);
 
     getactiveuser();
-    setTimeout(function(){
-        getusershortrequests();
-    },100);
-    setTimeout(function(){
-        getothershortrequests();
-    },100);
+
+    getusershortrequests();
+
+    getothershortrequests();
+
 }
 
 function getusershortrequests() {
@@ -238,7 +239,7 @@ function getactiveuser() {
 function sendrequest(xhttp, url, GETPOST, funcstuff, send) {
     // AJAX Call
     xhttp.onreadystatechange = sendrequestfunc;
-    xhttp.open(GETPOST, url, true);
+    xhttp.open(GETPOST, url, false);
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(send);
     function sendrequestfunc() {

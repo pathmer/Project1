@@ -63,15 +63,12 @@ function submitrequest(){
     }
     else {
         newrequest();
-        setTimeout(function(){
-            newformdata();
-        },400);
-        setTimeout(function(){
-            newattachments();
-        },500);
-        setTimeout(function(){
-            window.location = "/Project1/html/HomePage.html"
-        },600);
+
+        newformdata();
+
+        newattachments();
+
+        window.location = "/Project1/html/HomePage.html"
     }
 }
 
@@ -130,7 +127,6 @@ function newformdata () {
     let xhttpnewformdata = new XMLHttpRequest();
     let nnewformdatasend = JSON.stringify(formData)
     function newformdatafunc() {
-        console.log('newformdata success');
     }
     sendrequest(xhttpnewformdata, url, "POST", newformdatafunc, nnewformdatasend)
 }
@@ -148,7 +144,6 @@ function newattachments () {
     let xhttpnewattachments = new XMLHttpRequest();
     let newattachmentssend = JSON.stringify(attachments)
     function newattachmentsfunc() {
-        console.log('newattachments success');
     }
     sendrequest(xhttpnewattachments, url, "POST", newattachmentsfunc, newattachmentssend)
 }
@@ -160,7 +155,7 @@ function cancel() {
 function sendrequest(xhttp, url, GETPOST, funcstuff, send) {
     // AJAX Call
     xhttp.onreadystatechange = sendrequestfunc;
-    xhttp.open(GETPOST, url, true);
+    xhttp.open(GETPOST, url, false);
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(send);
     function sendrequestfunc() {

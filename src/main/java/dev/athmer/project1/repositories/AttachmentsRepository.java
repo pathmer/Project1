@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.athmer.project1.beans.Attachments;
-import dev.athmer.project1.logging.AppLogger;
+//import dev.athmer.project1.logging.AppLogger;
 import dev.athmer.project1.utilities.JDBCConnection;
 
 public class AttachmentsRepository implements RootRepository<Attachments> {
@@ -17,7 +17,7 @@ public class AttachmentsRepository implements RootRepository<Attachments> {
 
 	@Override
 	public Attachments add(Attachments a) {
-		AppLogger.logger.info("Account table add record request.");
+		//AppLogger.logger.info("Account table add record request.");
 		String sql = "insert into \"Project_1\".attachments values (default, default, default, default, default, ?) returning *;";
 		
 		try {
@@ -50,7 +50,7 @@ public class AttachmentsRepository implements RootRepository<Attachments> {
 
 	@Override
 	public Attachments getById(Integer id) {
-		AppLogger.logger.info("Account table view by ID request.");
+		//AppLogger.logger.info("Account table view by ID request.");
 		String sql = "select * from \"Project_1\".attachments where id = ?;";
 		
 		try {
@@ -78,7 +78,7 @@ public class AttachmentsRepository implements RootRepository<Attachments> {
 
 	@Override
 	public List<Attachments> getAll() {
-		AppLogger.logger.info("Account table view all request.");
+		//AppLogger.logger.info("Account table view all request.");
 		List<Attachments> attachments = new ArrayList<Attachments>();
 		
 		String sql = "select * from \"Project_1\".attachments;";
@@ -109,7 +109,7 @@ public class AttachmentsRepository implements RootRepository<Attachments> {
 
 	@Override
 	public Attachments update(Attachments a) {
-		AppLogger.logger.info("Account table update record request.");
+		//AppLogger.logger.info("Account table update record request.");
 		String sql = "update \"Project_1\".attachments set id = ?, optattachments = ?, msgsupapproval = ?,"
 				+ " msgdephdapproval = ?, gradepresentation = ?, requests = ? where id = ? returning *;";
 		
@@ -147,7 +147,7 @@ public class AttachmentsRepository implements RootRepository<Attachments> {
 
 	@Override
 	public boolean delete(Integer id) {
-		AppLogger.logger.info("Account table delete record request.");
+		//AppLogger.logger.info("Account table delete record request.");
 		String sql = "delete from \"Project_1\".attachments where id = ? returning *;";
 		
 		try {
@@ -167,7 +167,7 @@ public class AttachmentsRepository implements RootRepository<Attachments> {
 	}
 	
 	public Attachments getByRequestId(Integer id) {
-		AppLogger.logger.info("Account table view by ID request.");
+		//AppLogger.logger.info("Account table view by ID request.");
 		String sql = "select * from \"Project_1\".attachments where requests = ?;";
 		
 		try {

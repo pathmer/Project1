@@ -234,10 +234,7 @@ public class FrontControllerServlet extends HttpServlet {
 					loginsuccess = true;
 				}
 //				session.setMaxInactiveInterval(0);
-//				session.invalidate();
 
-				//response.setHeader("Origin", "http://localhost:8080/Project1/login");
-				//response.setHeader("Access-Control-Allow-Origin","*");
 				response.setHeader("Content-Type", "application/json");
 				response.getWriter().append(gson.toJson(loginsuccess));
 				break;

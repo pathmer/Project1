@@ -10,7 +10,7 @@ import java.util.List;
 
 import dev.athmer.project1.beans.Request;
 import dev.athmer.project1.beans.User;
-import dev.athmer.project1.logging.AppLogger;
+//import dev.athmer.project1.logging.AppLogger;
 import dev.athmer.project1.utilities.JDBCConnection;
 
 public class RequestRepository implements RootRepository<Request> {
@@ -19,7 +19,7 @@ public class RequestRepository implements RootRepository<Request> {
 
 	@Override
 	public Request add(Request r) {
-		AppLogger.logger.info("Account table add record request.");
+		//AppLogger.logger.info("Account table add record request.");
 		String sql = "insert into \"Project_1\".requests values"
 				+ " (default, ?, ?, ?, ?, ?, ?, ?, default, default, default, default, default, default, default, default, default, ?) returning *;";
 
@@ -73,7 +73,7 @@ public class RequestRepository implements RootRepository<Request> {
 
 	@Override
 	public Request getById(Integer id) {
-		AppLogger.logger.info("Account table view by ID request.");
+		//AppLogger.logger.info("Account table view by ID request.");
 		String sql = "select * from \"Project_1\".requests where id = ?;";
 		
 		try {
@@ -113,7 +113,7 @@ public class RequestRepository implements RootRepository<Request> {
 
 	@Override
 	public List<Request> getAll() {
-		AppLogger.logger.info("Account table view all request.");
+		//AppLogger.logger.info("Account table view all request.");
 		List<Request> requests = new ArrayList<Request>();
 		
 		String sql = "select * from \"Project_1\".requests;";
@@ -156,7 +156,7 @@ public class RequestRepository implements RootRepository<Request> {
 
 	@Override
 	public Request update(Request r) {
-		AppLogger.logger.info("Account table update record request.");
+		//AppLogger.logger.info("Account table update record request.");
 		String sql = "update \"Project_1\".requests set id = ?, title = ? , startDate = ?, reimbursement = ?, status = ?, inbox = ?,"
 					+ " datetimestamp = ?, priority = ?, amountexceeded = ?, exceededreason = ?, bencoescalated = ?,"
 					+ " empapp = ?, supapp = ?, manapp = ?, dhdapp = ?, benapp = ?, denialreason = ?,"
@@ -220,7 +220,7 @@ public class RequestRepository implements RootRepository<Request> {
 
 	@Override
 	public boolean delete(Integer id) {
-		AppLogger.logger.info("Account table delete record request.");
+		//AppLogger.logger.info("Account table delete record request.");
 		String sql = "delete from \"Project_1\".requests where id = ? returning *;";
 		
 		try {
@@ -240,7 +240,7 @@ public class RequestRepository implements RootRepository<Request> {
 	}
 
 	public List<Request> getUserRequestShortListByAccount(Integer acc) {
-		AppLogger.logger.info("Account table view by ID request.");
+		//AppLogger.logger.info("Account table view by ID request.");
 		String sql = "select * from \"Project_1\".requests where accounts = ?;";
 		List<Request> requests = new ArrayList<Request>();
 		
@@ -282,14 +282,9 @@ public class RequestRepository implements RootRepository<Request> {
 	}
 	
 	public List<Request> getOtherRequestShortListByYear(User u, Integer year) {
-		AppLogger.logger.info("Account table view by ID request.");
+		//AppLogger.logger.info("Account table view by ID request.");
 		String sql = null;
-//		String sql = "select * from \"Project_1\".requests left join \"Project_1\".requests"
-//				+ " on \"Project_1\".accounts.id = \"Project_1\".requests.accounts"
-//				+ " where year = ?, "
-//				+ "--order by \"Project_1\".requests.id desc;"
-//				+ ""
-//				+ "where accounts = ?;";
+		
 		if ("supervisor".equals(u.getUtype())) {
 			sql = "select \"Project_1\".requests.* from \"Project_1\".users"
 					+ " left join \"Project_1\".accounts on \"Project_1\".accounts.users = \"Project_1\".users.id"
@@ -350,7 +345,7 @@ public class RequestRepository implements RootRepository<Request> {
 	}
 	
 	public List<Request> getBencoRequestShortListByYear(Integer year) {
-		AppLogger.logger.info("Account table view by ID request.");
+		//AppLogger.logger.info("Account table view by ID request.");
 		String sql = null;
 		sql = "select \"Project_1\".requests.* from \"Project_1\".users"
 				+ " left join \"Project_1\".accounts on \"Project_1\".accounts.users = \"Project_1\".users.id"

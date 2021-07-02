@@ -10,6 +10,7 @@ public class User {
 	private String lastname;
 	private String ustatus;
 	private Integer supervisor;
+	private Integer manager;
 	private String department;
 	private Integer depthead;
 	
@@ -21,7 +22,7 @@ public class User {
 
 
 	public User(Integer id, String utype, String usernames, String passwords, Integer ssn, String firstname,
-			String lastname, String ustatus, Integer supervisor, String department, Integer depthead) {
+			String lastname, String ustatus, Integer supervisor, Integer manager, String department, Integer depthead) {
 		super();
 		this.id = id;
 		this.utype = utype;
@@ -32,18 +33,19 @@ public class User {
 		this.lastname = lastname;
 		this.ustatus = ustatus;
 		this.supervisor = supervisor;
+		this.manager = manager;
 		this.department = department;
 		this.depthead = depthead;
 	}
 
-	
+
 	public User(String usernames, String passwords) {
 		super();
 		this.usernames = usernames;
 		this.passwords = passwords;
 	}
 
-	
+
 	public User(Integer id) {
 		super();
 		this.id = id;
@@ -53,66 +55,118 @@ public class User {
 	public Integer getId() {
 		return id;
 	}
+
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+
 	public String getUtype() {
 		return utype;
 	}
+
+
 	public void setUtype(String utype) {
 		this.utype = utype;
 	}
+
+
 	public String getUsernames() {
 		return usernames;
 	}
+
+
 	public void setUsernames(String usernames) {
 		this.usernames = usernames;
 	}
+
+
 	public String getPasswords() {
 		return passwords;
 	}
+
+
 	public void setPasswords(String passwords) {
 		this.passwords = passwords;
 	}
+
+
 	public Integer getSsn() {
 		return ssn;
 	}
+
+
 	public void setSsn(Integer ssn) {
 		this.ssn = ssn;
 	}
+
+
 	public String getFirstname() {
 		return firstname;
 	}
+
+
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
+
+
 	public String getLastname() {
 		return lastname;
 	}
+
+
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+
+
 	public String getUstatus() {
 		return ustatus;
 	}
+
+
 	public void setUstatus(String ustatus) {
 		this.ustatus = ustatus;
 	}
+
+
 	public Integer getSupervisor() {
 		return supervisor;
 	}
+
+
 	public void setSupervisor(Integer supervisor) {
 		this.supervisor = supervisor;
 	}
+
+
+	public Integer getManager() {
+		return manager;
+	}
+
+
+	public void setManager(Integer manager) {
+		this.manager = manager;
+	}
+
+
 	public String getDepartment() {
 		return department;
 	}
+
+
 	public void setDepartment(String department) {
 		this.department = department;
 	}
+
+
 	public Integer getDepthead() {
 		return depthead;
 	}
+
+
 	public void setDepthead(Integer depthead) {
 		this.depthead = depthead;
 	}
@@ -127,6 +181,7 @@ public class User {
 		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
+		result = prime * result + ((manager == null) ? 0 : manager.hashCode());
 		result = prime * result + ((passwords == null) ? 0 : passwords.hashCode());
 		result = prime * result + ((ssn == null) ? 0 : ssn.hashCode());
 		result = prime * result + ((supervisor == null) ? 0 : supervisor.hashCode());
@@ -171,6 +226,11 @@ public class User {
 				return false;
 		} else if (!lastname.equals(other.lastname))
 			return false;
+		if (manager == null) {
+			if (other.manager != null)
+				return false;
+		} else if (!manager.equals(other.manager))
+			return false;
 		if (passwords == null) {
 			if (other.passwords != null)
 				return false;
@@ -209,7 +269,8 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", utype=" + utype + ", usernames=" + usernames + ", passwords=" + passwords
 				+ ", ssn=" + ssn + ", firstname=" + firstname + ", lastname=" + lastname + ", ustatus=" + ustatus
-				+ ", supervisor=" + supervisor + ", department=" + department + ", depthead=" + depthead + "]";
+				+ ", supervisor=" + supervisor + ", manager=" + manager + ", department=" + department + ", depthead="
+				+ depthead + "]";
 	}
 
 }

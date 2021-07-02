@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.athmer.project1.beans.User;
-import dev.athmer.project1.logging.AppLogger;
+//import dev.athmer.project1.logging.AppLogger;
 import dev.athmer.project1.utilities.JDBCConnection;
 
 public class UserRepository implements RootRepository<User> {
@@ -18,7 +18,7 @@ public class UserRepository implements RootRepository<User> {
 	
 	@Override
 	public List<User> getAll() {
-		AppLogger.logger.info("User table view all request.");
+		//AppLogger.logger.info("User table view all request.");
 		List<User> users = new ArrayList<User>();
 		
 		String sql = "select * from \"Project_1\".users;";
@@ -39,6 +39,7 @@ public class UserRepository implements RootRepository<User> {
 				u.setLastname(rs.getString("lastname"));
 				u.setUstatus(rs.getString("ustatus"));
 				u.setSupervisor(rs.getInt("supervisor"));
+				u.setManager(rs.getInt("manager"));
 				u.setDepartment(rs.getString("department"));
 				u.setDepthead(rs.getInt("depthead"));
 
@@ -54,7 +55,7 @@ public class UserRepository implements RootRepository<User> {
 
 	@Override
 	public User getById(Integer id) {
-		AppLogger.logger.info("User table view by ID request.");
+		//AppLogger.logger.info("User table view by ID request.");
 		String sql = "select * from \"Project_1\".users where id = ?;";
 		
 		try {
@@ -74,6 +75,7 @@ public class UserRepository implements RootRepository<User> {
 				u.setLastname(rs.getString("lastname"));
 				u.setUstatus(rs.getString("ustatus"));
 				u.setSupervisor(rs.getInt("supervisor"));
+				u.setManager(rs.getInt("manager"));
 				u.setDepartment(rs.getString("department"));
 				u.setDepthead(rs.getInt("depthead"));
 				return u;
@@ -87,8 +89,8 @@ public class UserRepository implements RootRepository<User> {
 
 	@Override
 	public User add(User u) {
-		AppLogger.logger.info("User table add record request.");
-		String sql = "insert into \"Project_1\".users values (default, default, ?, ?, ?, ?, ?, default, default, ?, default) returning *;";
+		//AppLogger.logger.info("User table add record request.");
+		String sql = "insert into \"Project_1\".users values (default, default, ?, ?, ?, ?, ?, default, default, default, ?, default) returning *;";
 		
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -114,6 +116,7 @@ public class UserRepository implements RootRepository<User> {
 					u.setLastname(rs.getString("lastname"));
 					u.setUstatus(rs.getString("ustatus"));
 					u.setSupervisor(rs.getInt("supervisor"));
+					u.setManager(rs.getInt("manager"));
 					u.setDepartment(rs.getString("department"));
 					u.setDepthead(rs.getInt("depthead"));
 					
@@ -133,9 +136,9 @@ public class UserRepository implements RootRepository<User> {
 
 	@Override
 	public User update(User u) {
-		AppLogger.logger.info("User table update record request.");
+		//AppLogger.logger.info("User table update record request.");
 		String sql = "update \"Project_1\".users set id = ?, utype = ? , usernames = ?, passwords = ?,"
-				+ " ssn = ?, firstname = ?, lastname = ?, ustatus = ?, supervisor = ?, department = ?,"
+				+ " ssn = ?, firstname = ?, lastname = ?, ustatus = ?, supervisor = ?, manager = ?, department = ?,"
 				+ " depthead = ?, where id = ? returning *;";
 		
 		try {
@@ -149,9 +152,10 @@ public class UserRepository implements RootRepository<User> {
 			ps.setString(7, u.getLastname());
 			ps.setString(8, u.getUstatus());
 			ps.setInt(9, u.getSupervisor());
-			ps.setString(10, u.getDepartment());
-			ps.setInt(11, u.getDepthead());
-			ps.setInt(12, u.getId());
+			ps.setInt(10, u.getManager());
+			ps.setString(11, u.getDepartment());
+			ps.setInt(12, u.getDepthead());
+			ps.setInt(13, u.getId());
 			
 			boolean success = (ps.execute());
 			
@@ -167,6 +171,10 @@ public class UserRepository implements RootRepository<User> {
 					u.setFirstname(rs.getString("firstname"));
 					u.setLastname(rs.getString("lastname"));
 					u.setUstatus(rs.getString("ustatus"));
+					u.setSupervisor(rs.getInt("supervisor"));
+					u.setManager(rs.getInt("manager"));
+					u.setDepartment(rs.getString("department"));
+					u.setDepthead(rs.getInt("depthead"));
 					return u;
 				}
 			}	
@@ -179,7 +187,7 @@ public class UserRepository implements RootRepository<User> {
 
 	@Override
 	public boolean delete(Integer id) {
-		AppLogger.logger.info("User table delete record request.");
+		//AppLogger.logger.info("User table delete record request.");
 		String sql = "delete from \"Project_1\".users where id = ? returning *;";
 		
 		try {
@@ -198,41 +206,8 @@ public class UserRepository implements RootRepository<User> {
 		return false;
 	}
 
-//	public List<User> getByUstatus(String ustatus) {  //delete?
-//		AppLogger.logger.info("User table view by status request.");
-//		List<User> users = new ArrayList<User>();
-//		
-//		String sql = "select * from \"Project_1\".users where ustatus = ?;";
-//		
-//		try {
-//			PreparedStatement ps = conn.prepareStatement(sql);
-//			ps.setString(1, ustatus);
-//			
-//			ResultSet rs = ps.executeQuery();
-//		
-//			while (rs.next()) {
-//				User u = new User();
-//				u.setId(rs.getInt("id"));
-//				u.setUtype(rs.getString("utype"));
-//				u.setUsernames(rs.getString("usernames"));
-//				u.setPasswords(rs.getString("passwords"));
-//				u.setSsn(rs.getInt("ssn"));
-//				u.setFirstname(rs.getString("firstname"));
-//				u.setLastname(rs.getString("lastname"));
-//				u.setUstatus(rs.getString("ustatus"));
-//				
-//				users.add(u);
-//			}
-//			return users;
-//		}
-//		catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//
 	public User getByUsername(String username) { //delete?
-		AppLogger.logger.info("User table view by username request.");
+		//AppLogger.logger.info("User table view by username request.");
 		String sql = "select * from \"Project_1\".users where usernames = ?;";
 		
 		try {
@@ -252,6 +227,7 @@ public class UserRepository implements RootRepository<User> {
 				u.setLastname(rs.getString("lastname"));
 				u.setUstatus(rs.getString("ustatus"));
 				u.setSupervisor(rs.getInt("supervisor"));
+				u.setManager(rs.getInt("manager"));
 				u.setDepartment(rs.getString("department"));
 				u.setDepthead(rs.getInt("depthead"));
 				return u;
@@ -265,7 +241,7 @@ public class UserRepository implements RootRepository<User> {
 	}
 
 	public List<User> getSubordanates(User activeuser) { //delete?
-		AppLogger.logger.info("User table view by username request.");
+		//AppLogger.logger.info("User table view by username request.");
 		List<User> users = new ArrayList<User>();
 		String sql = null;
 
@@ -297,6 +273,7 @@ public class UserRepository implements RootRepository<User> {
 				u.setLastname(rs.getString("lastname"));
 				u.setUstatus(rs.getString("ustatus"));
 				u.setSupervisor(rs.getInt("supervisor"));
+				u.setManager(rs.getInt("manager"));
 				u.setDepartment(rs.getString("department"));
 				u.setDepthead(rs.getInt("depthead"));
 				users.add(u);

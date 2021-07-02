@@ -9,7 +9,7 @@ import java.util.List;
 
 import dev.athmer.project1.beans.Account;
 import dev.athmer.project1.beans.User;
-import dev.athmer.project1.logging.AppLogger;
+//import dev.athmer.project1.logging.AppLogger;
 import dev.athmer.project1.utilities.JDBCConnection;
 
 
@@ -20,7 +20,7 @@ public class AccountRepository implements RootRepository<Account> {
 
 	@Override
 	public List<Account> getAll() {
-		AppLogger.logger.info("Account table view all request.");
+		//AppLogger.logger.info("Account table view all request.");
 		List<Account> accounts = new ArrayList<Account>();
 		
 		String sql = "select * from \"Project_1\".accounts;";
@@ -51,7 +51,7 @@ public class AccountRepository implements RootRepository<Account> {
 
 	@Override
 	public Account getById(Integer id) {
-		AppLogger.logger.info("Account table view by ID request.");
+		//AppLogger.logger.info("Account table view by ID request.");
 		String sql = "select * from \"Project_1\".accounts where id = ?;";
 		
 		try {
@@ -79,7 +79,7 @@ public class AccountRepository implements RootRepository<Account> {
 
 	@Override
 	public Account add(Account a) {
-		AppLogger.logger.info("Account table add record request.");
+		//AppLogger.logger.info("Account table add record request.");
 		String sql = "insert into \"Project_1\".accounts values (default, ?, default, default, default, ?) returning *;";
 		
 		try {
@@ -113,7 +113,7 @@ public class AccountRepository implements RootRepository<Account> {
 
 	@Override
 	public Account update(Account a) {
-		AppLogger.logger.info("Account table update record request.");
+		//AppLogger.logger.info("Account table update record request.");
 		String sql = "update \"Project_1\".accounts set id = ?, ayear = ?, balance = ?,"
 				+ " pending = ?, reimbursed = ?, users = ? where id = ? returning *;";
 		
@@ -151,7 +151,7 @@ public class AccountRepository implements RootRepository<Account> {
 
 	@Override
 	public boolean delete(Integer id) {
-		AppLogger.logger.info("Account table delete record request.");
+		//AppLogger.logger.info("Account table delete record request.");
 		String sql = "delete from \"Project_1\".accounts where id = ? returning *;";
 		
 		try {
@@ -172,7 +172,7 @@ public class AccountRepository implements RootRepository<Account> {
 	
 	
 	public List<Account> getByUser(Integer userid) { //delete?
-		AppLogger.logger.info("Account table view by user request.");
+		//AppLogger.logger.info("Account table view by user request.");
 		List<Account> accounts = new ArrayList<Account>();
 		
 		String sql = "select * from \"Project_1\".accounts where users = ?;";
@@ -203,7 +203,7 @@ public class AccountRepository implements RootRepository<Account> {
 	}
 	
 	public Account getByUserYear(User u, Integer y) {
-		AppLogger.logger.info("Account table view by ID request.");
+		//AppLogger.logger.info("Account table view by ID request.");
 		String sql = "select * from \"Project_1\".accounts where users = ?, ayear = ?;";
 		
 		try {

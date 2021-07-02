@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.athmer.project1.beans.TierInfo;
-import dev.athmer.project1.logging.AppLogger;
+//import dev.athmer.project1.logging.AppLogger;
 import dev.athmer.project1.utilities.JDBCConnection;
 
 public class TierInfoRepository implements RootRepository<TierInfo> {
@@ -17,7 +17,7 @@ public class TierInfoRepository implements RootRepository<TierInfo> {
 
 	@Override
 	public TierInfo add(TierInfo t) {
-		AppLogger.logger.info("Account table add record request.");
+		//AppLogger.logger.info("Account table add record request.");
 		String sql = "insert into \"Project_1\".tierinfo values (default, default, default, default, default ?) returning *;";
 		
 		try {
@@ -50,7 +50,7 @@ public class TierInfoRepository implements RootRepository<TierInfo> {
 
 	@Override
 	public TierInfo getById(Integer id) {
-		AppLogger.logger.info("Account table view by ID request.");
+		//AppLogger.logger.info("Account table view by ID request.");
 		String sql = "select * from \"Project_1\".tierinfo where id = ?;";
 		
 		try {
@@ -80,7 +80,7 @@ public class TierInfoRepository implements RootRepository<TierInfo> {
 
 	@Override
 	public List<TierInfo> getAll() {
-		AppLogger.logger.info("Account table view all request.");
+		//AppLogger.logger.info("Account table view all request.");
 		List<TierInfo> tierinfo = new ArrayList<TierInfo>();
 		
 		String sql = "select * from \"Project_1\".tierinfo;";
@@ -111,7 +111,7 @@ public class TierInfoRepository implements RootRepository<TierInfo> {
 
 	@Override
 	public TierInfo update(TierInfo t) {
-		AppLogger.logger.info("Account table update record request.");
+		//AppLogger.logger.info("Account table update record request.");
 		String sql = "update \"Project_1\".tierinfo set id = ?, toid = ?, tomsg = ?, frommsg = ?,"
 				+ " frommsg = ?, requests = ? where id = ? returning *;";
 		
@@ -150,7 +150,7 @@ public class TierInfoRepository implements RootRepository<TierInfo> {
 
 	@Override
 	public boolean delete(Integer id) {
-		AppLogger.logger.info("Account table delete record request.");
+		//AppLogger.logger.info("Account table delete record request.");
 		String sql = "delete from \"Project_1\".tierinfo where id = ? returning *;";
 		
 		try {

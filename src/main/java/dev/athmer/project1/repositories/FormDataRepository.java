@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.athmer.project1.beans.FormData;
-import dev.athmer.project1.logging.AppLogger;
+//import dev.athmer.project1.logging.AppLogger;
 import dev.athmer.project1.utilities.JDBCConnection;
 
 public class FormDataRepository implements RootRepository<FormData> {
@@ -17,7 +17,7 @@ public class FormDataRepository implements RootRepository<FormData> {
 
 	@Override
 	public FormData add(FormData f) {
-		AppLogger.logger.info("Account table add record request.");
+		//AppLogger.logger.info("Account table add record request.");
 		String sql = "insert into \"Project_1\".formdata values (default, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning *;";
 		
 		try {
@@ -62,7 +62,7 @@ public class FormDataRepository implements RootRepository<FormData> {
 
 	@Override
 	public FormData getById(Integer id) {
-		AppLogger.logger.info("Account table view by ID request.");
+		//AppLogger.logger.info("Account table view by ID request.");
 		String sql = "select * from \"Project_1\".formdata where id = ?;";
 		
 		try {
@@ -94,7 +94,7 @@ public class FormDataRepository implements RootRepository<FormData> {
 
 	@Override
 	public List<FormData> getAll() {
-		AppLogger.logger.info("Account table view all request.");
+		//AppLogger.logger.info("Account table view all request.");
 		List<FormData> formdata = new ArrayList<FormData>();
 		
 		String sql = "select * from \"Project_1\".formdata;";
@@ -129,7 +129,7 @@ public class FormDataRepository implements RootRepository<FormData> {
 
 	@Override
 	public FormData update(FormData f) {
-		AppLogger.logger.info("Account table update record request.");
+		//AppLogger.logger.info("Account table update record request.");
 		String sql = "update \"Project_1\".formdata set id = ?, times = ?, locations = ?, description = ?,"
 				+ " costs = ?, gradeFormat = ?, eventType = ?, justification = ?, missedWorkhrsperwk = ?, requests = ?"
 				+ " where id = ? returning *;";
@@ -176,7 +176,7 @@ public class FormDataRepository implements RootRepository<FormData> {
 
 	@Override
 	public boolean delete(Integer id) {
-		AppLogger.logger.info("Account table delete record request.");
+		//AppLogger.logger.info("Account table delete record request.");
 		String sql = "delete from \"Project_1\".formdata where id = ? returning *;";
 		
 		try {
@@ -196,7 +196,7 @@ public class FormDataRepository implements RootRepository<FormData> {
 	}
 
 	public List<FormData> getByAccount(Integer id) {
-		AppLogger.logger.info("Account table view by ID request.");
+		//AppLogger.logger.info("Account table view by ID request.");
 		String sql = "select * from from \"Project_1\".requests left join \"Project_1\".formdata"
 				+ " on \"Project_1\".requests.id = \"Project_1\".formdata.requests where accounts = ?;";
 		
@@ -230,7 +230,7 @@ public class FormDataRepository implements RootRepository<FormData> {
 	}
 	
 	public FormData getByRequestId(Integer id) {
-		AppLogger.logger.info("Account table view by ID request.");
+		//AppLogger.logger.info("Account table view by ID request.");
 		String sql = "select * from \"Project_1\".formdata where requests = ?;";
 		
 		try {
