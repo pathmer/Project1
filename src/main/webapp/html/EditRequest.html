@@ -87,10 +87,12 @@
     <br>
     <br>
     <br>
-    <button id='approve' type='button' onclick='approverequest("Yes")'>Approve</button>
-    <button id='deny' type='button' onclick='approverequest("No")'>Deny Request</button>
-    <label for='denyreason'>Reason for denial:</label>
-    <input id='denyreason'type='text' placeholder="Must enter a reason for denial to process.">
+    <div id="appdeny">
+        <button id='approve' type='button' onclick='approverequest("Yes")'>Approve</button>
+        <button id='deny' type='button' onclick='approverequest("No")'>Deny Request</button>
+        <label for='denyreason'>Reason for denial:</label>
+        <input id='denyreason'type='text' placeholder="Must enter a reason for denial to process.">
+    </div>
     <br>
     <br>
     <div id="bencobuttons">
@@ -101,11 +103,13 @@
     </div>
     <br>
     <br>
-    <button id='requestinfo' type='button' onclick='null'>Request Information</button>
-    <button id='addattachments' type='button' onclick='null'>Add Attachments</button>
-    <br>
-    <br>
-    <button id='complete' type='button' onclick='complete()'>Complete Reimbursement</button>
+    <div id="otherbuttons">
+        <button id='requestinfo' type='button' onclick='null'>Request Information</button>
+        <button id='addattachments' type='button' onclick='null'>Add Attachments</button>
+        <br>
+        <br>
+        <button id='complete' type='button' onclick='complete()'>Complete Reimbursement</button>
+    </div>
     <br>
     <br>
     <br>
